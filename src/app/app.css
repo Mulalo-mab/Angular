@@ -1,0 +1,8 @@
+.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  font-weight: bold;
+}
+
+a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
