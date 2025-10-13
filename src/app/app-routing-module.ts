@@ -4,7 +4,8 @@ import { HelloWorldComponent } from './hello-world/hello-world-component/hello-w
 import { CounterComponent } from './counter/counter-component/counter-component';
 import { BindingComponent } from './binding/binding-component/binding-component';
 import { PipesComponent } from './pipes/pipes-component/pipes-component';
-
+import { FormComponent } from './forms/form-component/form-component';
+import { ReactiveFormsComp } from './reactive-forms/reactive-forms-comp/reactive-forms-comp';
 
 const routes: Routes = [
   { path: '', component: HelloWorldComponent },
@@ -16,6 +17,8 @@ const routes: Routes = [
     path: 'employees',
     loadChildren: () => import('./employees/employees-module').then(m => m.EmployeesModule)
   },
+  { path: 'forms', component: FormComponent },
+  { path: 'reactive-forms', component: ReactiveFormsComp },
   { path: '**', redirectTo: '/home' }
 ];
 

@@ -1,0 +1,82 @@
+.registration-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #f9fafc;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+  /* Heading */
+  .registration-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+
+/* Form structure */
+.registration-form .form-group {
+  margin-bottom: 18px;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Inputs */
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+  }
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+/* Small animation */
+.registration-container:hover {
+  transform: translateY(-3px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .registration-container {
+    padding: 20px;
+    margin: 40px 15px;
+  }
+
+  .btn-primary {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
