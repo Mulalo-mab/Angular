@@ -6,6 +6,11 @@ import { BindingComponent } from './binding/binding-component/binding-component'
 import { PipesComponent } from './pipes/pipes-component/pipes-component';
 import { FormComponent } from './forms/form-component/form-component';
 import { ReactiveFormsComp } from './reactive-forms/reactive-forms-comp/reactive-forms-comp';
+import { CreateForm } from './create/create-form/create-form';
+import { AgTable } from './ag-grid/ag-table/ag-table';
+import { AgChart } from './ag-charts/ag-chart/ag-chart';
+import { PostComponent } from './post/post-component/post-component';
+import { PostForm } from './post/post-component/post-form/post-form';
 
 const routes: Routes = [
   { path: '', component: HelloWorldComponent },
@@ -13,12 +18,19 @@ const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'binding', component: BindingComponent },
   { path: 'pipes', component: PipesComponent },
+  { path: 'create', component: CreateForm },
+  { path: 'agtable', component: AgTable },
+  { path: 'agchart', component: AgChart },
+  { path: 'postComponent', component: PostComponent },
+  { path: 'postForm/create', component: PostForm },
+  { path: 'postForm/edit/:ID', component: PostForm },
   {
     path: 'employees',
     loadChildren: () => import('./employees/employees-module').then(m => m.EmployeesModule)
   },
   { path: 'forms', component: FormComponent },
   { path: 'reactive-forms', component: ReactiveFormsComp },
+ 
   { path: '**', redirectTo: '/home' }
 ];
 

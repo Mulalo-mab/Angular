@@ -1,0 +1,186 @@
+<div class="col-lg-12">
+
+
+
+  <div class="form-inline" id="form1">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Date Range</div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="DateRange">Date Range:</label>
+                <input autocomplete="off" class="form-control dates text-box single-line hasDatepicker" id="DateFrom" name="DateFrom" placeholder="Format: 2025/10/24" style="margin-left: 10px;" type="text" value="">
+                <input autocomplete="off" class="form-control dates text-box single-line hasDatepicker" id="DateTo" name="DateTo" placeholder="Format: 2025/10/24" style="margin-left: 5px;" type="text" value="">
+
+                <button style="margin-left: 10px; background-color: #2e6da4; color: white;" type="submit" class="btn" id="btnGenerate" mat-raised-button>Generate</button>
+
+                <div class="col-md-offset-2">
+                  <span class="field-validation-valid text-danger" data-valmsg-for="DateFrom" data-valmsg-replace="true"></span>
+                  <span style="margin-left: 30px;"></span>
+                  <span class="field-validation-valid text-danger" data-valmsg-for="DateTo" data-valmsg-replace="true"></span>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                  <p id="message" style="color: red; font-size: 20px; display: none;"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Target</div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12">
+
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 100px;">
+                <div class="col-md-12">
+
+
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 100px;">
+                <div class="col-md-12">
+
+                </div>
+
+
+                <div>
+                  <ag-charts style="width: 80%; height: 450px;"
+                             [options]="lineOptions"></ag-charts>
+                </div>
+
+              </div>
+              <div class="row" style="margin-top: 200px;">
+                <div class="col-md-12">
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Individual Hours-->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Daily Individual Hours</div>
+            <div class="panel-body">
+
+              <div>
+                <ag-charts style="width: 100%; height: 450px;"
+                           [options]="iceOptions"></ag-charts>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Targets</div>
+            <div class="panel-body">
+
+              <div>
+                <ag-charts style="width: 80%; height: 450px;"
+                           [options]="salesOption"></ag-charts>
+              </div>
+
+              <div class="row">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--Hours per Client -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Hours Per Client</div>
+            <div class="panel-body">
+
+              <div>
+                <ag-charts [options]="donutOptions"></ag-charts>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Multiple Donut -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">outOptions</div>
+            <div class="panel-body">
+
+              <div>
+                <ag-charts [options]="outOptions"></ag-charts>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Pie Chart</div>
+            <div class="panel-body">
+
+              <div>
+                <ag-charts [options]="piesOptions"></ag-charts>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Combined charts-->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-panel-primary">
+            <div class="panel-heading">Combined charts</div>
+            <div class="panel-body">
+
+
+              <div>
+                <ag-charts [options]="scatterOptions"></ag-charts>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

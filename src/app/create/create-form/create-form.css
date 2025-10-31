@@ -1,0 +1,5 @@
+.ag-theme-alpine {
+    --ag-header-background-color: white;
+    --ag-row-hover-color: rgb(128,237,250);
+    --ag-background-color: black;
+}

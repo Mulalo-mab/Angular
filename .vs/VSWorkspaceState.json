@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\ag-grid",
+    "\\src\\app\\ag-grid\\ag-table",
+    "\\src\\app\\create\\create-form",
+    "\\src\\app\\employees\\services"
+  ],
+  "SelectedNode": "\\src\\app\\ag-grid\\ag-table\\ag-table.html",
+  "PreviewInSolutionExplorer": false
+}

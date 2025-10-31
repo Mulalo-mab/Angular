@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app'; 
 import { HelloWorldComponent } from './hello-world/hello-world-component/hello-world-component';
@@ -12,6 +13,15 @@ import { BindingComponent } from './binding/binding-component/binding-component'
 import { PipesComponent } from './pipes/pipes-component/pipes-component';
 import { FormComponent } from './forms/form-component/form-component';
 import { ReactiveFormsComp } from './reactive-forms/reactive-forms-comp/reactive-forms-comp';
+import { CreateForm } from './create/create-form/create-form';
+import { AgGridAngular } from 'ag-grid-angular';
+import { AgGridModule } from 'ag-grid-angular';
+import { AgTable } from './ag-grid/ag-table/ag-table';
+import { AgChartsModule } from 'ag-charts-angular';
+import { AgChart } from './ag-charts/ag-chart/ag-chart';
+import { PostComponent } from './post/post-component/post-component';
+import { PostForm } from './post/post-component/post-form/post-form';
+
 
 @NgModule({
   declarations: [
@@ -21,12 +31,23 @@ import { ReactiveFormsComp } from './reactive-forms/reactive-forms-comp/reactive
     BindingComponent,
     PipesComponent,
     FormComponent,
+    CreateForm,
+    AgTable,
+    AgChart,
+    PostComponent,
     ReactiveFormsComp,
+    PostForm,
+    
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    AgGridAngular,
+    AgGridModule,
     HttpClientModule,
+    AgChartsModule,
+    
     ReactiveFormsModule,
     AppRoutingModule
   ],

@@ -1,0 +1,174 @@
+.panel-panel-primary {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #2b669a;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.row {
+  padding: 1rem;
+}
+
+.panel-heading {
+  color: #fff;
+  background-color: #2b669a;
+  border-color: #2b669a;
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+}
+
+.panel-body {
+  padding: 1rem;
+}
+
+
+
+ag-charts {
+  display: block;
+  width: 100%;
+  height: 450px;
+}
+
+
+
+.chart-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chart-type-button {
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  color: #495057;
+  border: 2px solid #dee2e6;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+  .chart-type-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .chart-type-button:hover::before {
+    left: 100%;
+  }
+
+  .chart-type-button:hover {
+    background: linear-gradient(145deg, #e9ecef, #dee2e6);
+    border-color: #007bff;
+    color: #007bff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .chart-type-button.active {
+    background: linear-gradient(145deg, #007bff, #0056b3);
+    color: white;
+    border-color: #007bff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  }
+
+    .chart-type-button.active:hover {
+      background: linear-gradient(145deg, #0056b3, #004085);
+      border-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+    }
+
+   
+  .chart-type-button:nth-child(1).active { /* Bar */
+    background: linear-gradient(145deg, #ff6b6b, #ee5a52);
+    border-color: #ff6b6b;
+  }
+
+  .chart-type-button:nth-child(2).active { /* Line */
+    background: linear-gradient(145deg, #4ecdc4, #45b7d1);
+    border-color: #4ecdc4;
+  }
+
+  .chart-type-button:nth-child(3).active { /* Area */
+    background: linear-gradient(145deg, #45b7d1, #96ceb4);
+    border-color: #45b7d1;
+  }
+
+  .chart-type-button:nth-child(4).active { /* Pie */
+    background: linear-gradient(145deg, #96ceb4, #feca57);
+    border-color: #96ceb4;
+  }
+
+  .chart-type-button:nth-child(5).active { /* Donut */
+    background: linear-gradient(145deg, #feca57, #ff9ff3);
+    border-color: #feca57;
+  }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .chart-buttons {
+    gap: 6px;
+  }
+
+  .chart-type-button {
+    padding: 8px 16px;
+    font-size: 12px;
+    min-width: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-buttons {
+    gap: 4px;
+  }
+
+  .chart-type-button {
+    padding: 6px 12px;
+    font-size: 11px;
+    min-width: 60px;
+  }
+}
+
+
+.chart-header {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 200;
+  color: blue;
+  margin: 0 0 2rem 0;
+  padding: 1rem 0;
+  text-shadow: 2px 2px 4px rgba(255, 107, 139, 0.2);
+  position: relative;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+}
+
+.container {
+    padding: 10px;
+  
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+

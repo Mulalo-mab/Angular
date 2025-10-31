@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4>{{ isEditMode ? 'Edit Person' : 'Create New Person' }}</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+          <label for="name">Name</label>
+          <input type="text"
+                 id="name"
+                 formControlName="name"
+                 class="form-control"
+                 [class.is-invalid]="personForm.get('name')?.invalid && personForm.get('name')?.touched">
+          <div class="invalid-feedback" *ngIf="personForm.get('name')?.invalid && personForm.get('name')?.touched">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="location">Location</label>
+          <input type="text"
+                 id="location"
+                 formControlName="location"
+                 class="form-control"
+                 [class.is-invalid]="personForm.get('location')?.invalid && personForm.get('location')?.touched">
+          <div class="invalid-feedback" *ngIf="personForm.get('location')?.invalid && personForm.get('location')?.touched">
+            Location is required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="price">Price</label>
+          <input type="number"
+                 id="price"
+                 formControlName="price"
+                 class="form-control"
+                 [class.is-invalid]="personForm.get('price')?.invalid && personForm.get('price')?.touched">
+          <div class="invalid-feedback" *ngIf="personForm.get('price')?.errors?.['required'] && personForm.get('price')?.touched">
+            Price is required
+          </div>
+          <div class="invalid-feedback" *ngIf="personForm.get('price')?.errors?.['min'] && personForm.get('price')?.touched">
+            Price must be greater than or equal to 0
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit"
+                  class="btn btn-primary me-2"
+                  [disabled]="personForm.invalid">
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+          <button type="button"
+                  class="btn btn-secondary"
+                  (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

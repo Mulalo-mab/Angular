@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Mulalo Mabuda",
+    "location": "Kraaifontaion",
+    "money": 300
+  },
+  {
+    "id": 2,
+    "name": "Lamla",
+    "location": "Nyanga",
+    "money": 600
+  },
+  {
+    "id": 3,
+    "name": "Olwethu",
+    "location": "Phillip",
+    "money": 900
+  },
+  {
+    "id": 4,
+    "name": "Karen",
+    "location": "Bellvile",
+    "money": 1200
+  }
+]
