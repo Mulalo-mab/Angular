@@ -3,11 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\ag-grid",
-    "\\src\\app\\ag-grid\\ag-table",
-    "\\src\\app\\create\\create-form",
-    "\\src\\app\\employees\\services"
+    "\\src\\app\\ag-charts",
+    "\\src\\app\\ag-charts\\ag-chart",
+    "\\src\\app\\post",
+    "\\src\\app\\post\\post-component",
+    "\\src\\app\\post\\post-component\\post-form",
+    "\\src\\assets",
+    "\\src\\assets\\data"
   ],
-  "SelectedNode": "\\src\\app\\ag-grid\\ag-table\\ag-table.html",
+  "SelectedNode": "\\src\\app\\post\\post-component\\post-component-service.ts",
   "PreviewInSolutionExplorer": false
 }

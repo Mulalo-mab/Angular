@@ -4,6 +4,8 @@ import { ColDef } from 'ag-grid-community';
 import { AgCharts } from 'ag-charts-angular';
 import { AgBarSeriesOptions, AgChartOptions, AgLineSeriesOptions, AgCategoryAxisOptions, AgNumberAxisOptions, AgChartLegendOptions } from 'ag-charts-community';
 import { Router } from '@angular/router'
+import { PostComponentService, Person } from './post-component-service';
+import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -12,22 +14,13 @@ import { Router } from '@angular/router'
   templateUrl: './post-component.html',
   styleUrl: './post-component.css'
 })
-export class PostComponent {
 
- 
-
-  rowData = [
-    { edit: '', ID: 1, name: 'Mulalo', location: 'Kraaifontein', price: 50, },
-    { edit: '', ID: 2, name: 'Karen', location: 'Bellvile', price: 40 },
-    { edit: '', ID: 3, name: 'Sesethu', location: 'Philip', price: 45, },
-    { edit: '', ID: 4, name: 'Olwethu', location: 'Langa', price: 15, },
-    { edit: '', ID: 5, name: 'Matthwe', location: 'Cape Town', price: 20, },
-    { edit: '', ID: 6, name: 'Kerwin', location: 'Mowbray', price: 10}
-  ];
+export class PostComponent implements OnInit {
+  rowData: Person[] = [];
 
   colDefs: ColDef[] = [
     {
-      field: "Edit",
+      field: "edit",
       width: 80,
       cellRenderer: (params: any) => {
         const button = document.createElement('button');
@@ -43,13 +36,10 @@ export class PostComponent {
       },
     },
     { field: 'ID', width: 80 },
-    { field: 'name', width: 100},
+    { field: 'name', width: 100 },
     { field: 'location', width: 100 },
     { field: 'price', width: 100 }
   ];
-
-  
-
 
   public barChartOptions: AgChartOptions = {
     title: { text: 'Transport Money' },
@@ -77,10 +67,28 @@ export class PostComponent {
     ]
   };
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private postComponentService: PostComponentService
+  ) { }
 
   ngOnInit(): void {
-    this.updateChart();
+    this.loadPersons();
+
+    
+    this.postComponentService.persons$.subscribe(persons => {
+      this.rowData = persons;
+      this.updateChart();
+    });
+  }
+
+  loadPersons(): void {
+    this.postComponentService.getPersons()
+      .pipe(take(1))
+      .subscribe(persons => {
+        this.rowData = persons;
+        this.updateChart();
+      });
   }
 
   updateChart(): void {
@@ -98,9 +106,24 @@ export class PostComponent {
     this.router.navigate(['/postForm/edit', id]);
   }
 
-  refreshData(newData: any[]): void {
-    this.rowData = newData;
-    this.updateChart();
+  refreshData(): void {
+    this.postComponentService.refreshData();
+  }
+
+  
+  deletePerson(id: number): void {
+    if (confirm('Are you sure you want to delete this person?')) {
+      this.postComponentService.deletePerson(id)
+        .pipe(take(1))
+        .subscribe(success => {
+          if (success) {
+            console.log('Person deleted successfully');
+            
+          } else {
+            console.error('Failed to delete person');
+          }
+        });
+    }
   }
 }
 

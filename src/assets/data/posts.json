@@ -1,0 +1,33 @@
+[
+  {
+    "ID": 1,
+    "name": "Mulalo",
+    "location": "Kraaifontein",
+    "price": 45
+  },
+  {
+    "ID": 2,
+    "name": "Karen",
+    "location": "Bellvile",
+    "price": 40
+  },
+  {
+    "ID": 3,
+    "name": "Sesethu",
+    "location": "Philip",
+    "price": 45
+  },
+  {
+    "ID": 4,
+    "name": "Olwethu",
+    "location": "Langa",
+    "price": 15
+  },
+  {
+    "ID": 5,
+    "name": "Matthwe",
+    "location": "Cape Town",
+    "price": 20
+  }
+
+]

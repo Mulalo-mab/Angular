@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PostComponentService } from '../post-component-service';
+import { take } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-post-form',
@@ -12,13 +16,14 @@ export class PostForm implements OnInit {
   personForm: FormGroup;
   isEditMode = false;
   personId: number | null = null;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private postComponentService: PostComponentService
   ) {
-    // Initialize the form directly in constructor
     this.personForm = this.fb.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
@@ -28,52 +33,94 @@ export class PostForm implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if (params['ID']) {
+      if (params['id']) {
         this.isEditMode = true;
-        this.personId = +params['ID'];
+        this.personId = +params['id'];
         this.loadPersonData(this.personId);
+      } else {
+        this.isEditMode = false;
+        this.personId = null;
       }
     });
   }
 
   loadPersonData(id: number): void {
-    const personData = this.getPersonById(id);
-    if (personData) {
-      this.personForm.patchValue({
-        name: personData.name,
-        location: personData.location,
-        price: personData.price
+    this.isLoading = true;
+    this.postComponentService.getPersonById(id)
+      .pipe(take(1))
+      .subscribe(person => {
+        this.isLoading = false;
+        if (person) {
+          this.personForm.patchValue({
+            name: person.name,
+            location: person.location,
+            price: person.price
+          });
+        } else {
+          console.error('Person not found with ID:', id);
+          this.router.navigate(['/postComponent']);
+        }
       });
-    }
-  }
-
-  getPersonById(id: number): any {
-    const mockData = [
-      { ID: 1, name: 'Mulalo', location: 'Kraaifontein', price: 50 },
-      { ID: 2, name: 'Karen', location: 'Bellvile', price: 40 },
-      { ID: 3, name: 'Sesethu', location: 'Philip', price: 45 },
-      { ID: 4, name: 'Olwethu', location: 'Langa', price: 15 },
-      { ID: 5, name: 'Matthwe', location: 'Cape Town', price: 20 },
-      { ID: 6, name: 'Kerwin', location: 'Mowbray', price: 10 }
-    ];
-    return mockData.find(person => person.ID === id);
   }
 
   onSubmit(): void {
     if (this.personForm.valid) {
+      this.isLoading = true;
       const formData = this.personForm.value;
 
       if (this.isEditMode && this.personId) {
-        console.log('Updating person:', this.personId, formData);
+        
+        this.postComponentService.updatePerson(this.personId, formData)
+          .pipe(take(1))
+          .subscribe({
+            next: (updatedPerson) => {
+              this.isLoading = false;
+              console.log('Person updated successfully:', updatedPerson);
+              this.router.navigate(['/postComponent']);
+            },
+            error: (error) => {
+              this.isLoading = false;
+              console.error('Error updating person:', error);
+              alert('Error updating person. Please try again.');
+            }
+          });
       } else {
-        console.log('Creating new person:', formData);
+        
+        this.postComponentService.createPerson(formData)
+          .pipe(take(1))
+          .subscribe({
+            next: (newPerson) => {
+              this.isLoading = false;
+              console.log('Person created successfully:', newPerson);
+              this.router.navigate(['/postComponent']);
+            },
+            error: (error) => {
+              this.isLoading = false;
+              console.error('Error creating person:', error);
+              alert('Error creating person. Please try again.');
+            }
+          });
       }
-
-      this.router.navigate(['/postComponent']);
+    } else {
+      
+      this.markFormGroupTouched();
     }
   }
 
   onCancel(): void {
     this.router.navigate(['/postComponent']);
+  }
+
+  
+  private markFormGroupTouched(): void {
+    Object.keys(this.personForm.controls).forEach(key => {
+      const control = this.personForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  
+  get f() {
+    return this.personForm.controls;
   }
 }

@@ -12,6 +12,7 @@ import { AgChart } from './ag-charts/ag-chart/ag-chart';
 import { PostComponent } from './post/post-component/post-component';
 import { PostForm } from './post/post-component/post-form/post-form';
 
+
 const routes: Routes = [
   { path: '', component: HelloWorldComponent },
   { path: 'home', component: HelloWorldComponent },
@@ -30,6 +31,10 @@ const routes: Routes = [
   },
   { path: 'forms', component: FormComponent },
   { path: 'reactive-forms', component: ReactiveFormsComp },
+  {
+    path: 'core-feature',
+    loadChildren: () => import('./core-feature/core-feature-module').then(m => m.CoreFeatureModule)
+  },
  
   { path: '**', redirectTo: '/home' }
 ];

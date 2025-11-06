@@ -1,0 +1,30 @@
+<!-- src/app/core-feature/core-feature.component.html -->
+<div class="core-feature-container">
+  <nav class="feature-nav">
+    <a routerLink="column-feature"
+       routerLinkActive="active"
+       class="nav-link">
+      Column Feature
+    </a>
+    <a routerLink="column-group"
+       routerLinkActive="active"
+       class="nav-link">
+      Column Group
+    </a>
+    <a routerLink="combined-style"
+       routerLinkActive="active"
+       class="nav-link">
+      Combined Style
+    </a>
+    <a routerLink="sorting"
+       routerLinkActive="active"
+       class="nav-link">
+      Sorting
+    </a>
+  </nav>
+
+  <div class="content-area">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
