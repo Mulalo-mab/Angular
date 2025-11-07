@@ -36,13 +36,17 @@
 
   </div>
 
-
   <div class="ag-theme-alpine" style="height: 500px; width: 100%;">
-  <ag-grid-angular style="width: 100%; height: 100%;"
-                   [rowData]="rowData"
-                   [columnDefs]="columnDefs"
-                   [defaultColDef]="defaultColDef"
-                   (gridReady)="onGridReady($event)">
-  </ag-grid-angular>
+    <ag-grid-angular style="width: 100%; height: 100%;"
+                     [rowData]="rowData"
+                     [columnDefs]="columnDefs"
+                     [defaultColDef]="defaultColDef"
+                     (gridReady)="onGridReady($event)"
+                     theme="legacy">
+    </ag-grid-angular>
+  </div>
 </div>
-</div>
+
+
+
+

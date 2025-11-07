@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ColumnGroupService {
+export class ExternalDropService {
   
   private dataUrl = 'assets/data/olympic-athletes.json';
   private athletes: any[] = [];
@@ -57,4 +57,3 @@ export class ColumnGroupService {
     });
   }
 }
-

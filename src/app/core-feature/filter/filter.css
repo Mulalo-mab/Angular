@@ -1,0 +1,20 @@
+/* Age-based row styling */
+.ag-theme-alpine .age-under-20,
+::ng-deep .age-under-20 {
+  background-color: #d4edda !important; /* Light green */
+}
+
+.ag-theme-alpine .age-20-30,
+::ng-deep .age-20-30{
+  background-color: #fff3cd !important; /* Light yellow */
+}
+
+.ag-theme-alpine .age-over-30,
+::ng-deep .ag-over-30 {
+  background-color: #CC333344 !important; /* Light red */
+}
+
+/* Optional: Add some padding and border for better visibility */
+.age-under-20, .age-20-25, .age-over-30 {
+  border: 1px solid #ddd;
+}

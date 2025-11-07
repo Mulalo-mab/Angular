@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ColumnGroupService {
+export class EditService {
   
   private dataUrl = 'assets/data/olympic-athletes.json';
   private athletes: any[] = [];

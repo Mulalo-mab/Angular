@@ -5,6 +5,12 @@ import { ColumnFeature } from './column-feature/column-feature';
 import { ColumnGroup } from './column-group/column-group';
 import { CombinedStyle } from './combined-style/combined-style';
 import { SortingComponent } from './sorting-component/sorting-component';
+import { ExternalDrop } from './external-drop/external-drop';
+import { Filter } from './filter/filter';
+import { Edit } from './edit/edit';
+import { UpdateRow } from './update-row/update-row';
+import { Buttons } from './buttons/buttons';
+
 
 const routes: Routes = [
   {
@@ -15,6 +21,11 @@ const routes: Routes = [
       { path: 'column-group', component: ColumnGroup },
       { path: 'combined-style', component: CombinedStyle },
       { path: 'sorting', component: SortingComponent },
+      { path: 'external', component: ExternalDrop },
+      { path: 'filter', component: Filter },
+      { path: 'edit', component: Edit },
+      { path: 'update', component: UpdateRow },
+      { path: 'button', component: Buttons },
     ]
   }
 ];

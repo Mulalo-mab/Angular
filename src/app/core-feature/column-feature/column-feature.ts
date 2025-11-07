@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AgGridModule } from 'ag-grid-angular';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { ColumnFeatureService } from '../column-feature/column-feature-service';
-
-
-ModuleRegistry.registerModules([AllCommunityModule]);
-
 
 @Component({
   selector: 'app-column-feature',
@@ -14,12 +8,9 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   templateUrl: './column-feature.html',
   styleUrl: './column-feature.css'
 })
-
-
 export class ColumnFeature implements OnInit {
   private gridApi!: GridApi;
   rowData: any[] = [];
-  gridReady = false;
 
   columnDefs: ColDef[] = [
     { field: 'athlete', sortable: true, filter: false },
@@ -40,23 +31,25 @@ export class ColumnFeature implements OnInit {
   };
 
   gridOptions = {
-    onGridReady: (params: GridReadyEvent) => this.onGridReady(params)
+    theme: 'legacy' as any,
+    onGridReady: (params: any) => this.onGridReady(params)
   };
-
 
   constructor(private columnFeatureService: ColumnFeatureService) { }
 
   ngOnInit(): void {
     this.loadData();
-  }
+
+  };
 
   loadData(): void {
     this.columnFeatureService.getOlympicAthletes().subscribe({
       next: (data) => {
         console.log('Data received in component:', data);
         this.rowData = data;
-        // Update grid if it's ready
-        if (this.gridReady && this.gridApi) {
+        // CRITICAL: Update the grid with the new data
+        if (this.gridApi) {
+          console.log('Setting rowData on gridApi');
           this.gridApi.setGridOption('rowData', this.rowData);
         }
       },
@@ -66,23 +59,18 @@ export class ColumnFeature implements OnInit {
     });
   }
 
-  onGridReady(params: GridReadyEvent): void {
+  onGridReady(params: any): void {
     this.gridApi = params.api;
-    this.gridReady = true;
     console.log('Grid ready, current rowData length:', this.rowData.length);
 
-    // Set data if already loaded
+    // If data is already loaded, set it on the grid
     if (this.rowData && this.rowData.length > 0) {
+      console.log('Data already loaded, setting on grid');
       this.gridApi.setGridOption('rowData', this.rowData);
+    } else {
+      console.log('Data not loaded yet, grid will show empty');
     }
-
-    // Force refresh to ensure styles are applied
-    setTimeout(() => {
-      this.gridApi.refreshHeader();
-      this.gridApi.redrawRows();
-    }, 100);
   }
-
 
   onBtSortOn(): void {
     this.gridApi.applyColumnState({

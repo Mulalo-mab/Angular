@@ -1,0 +1,67 @@
+/* For age column styling */
+.ag-theme-alpine .rag-green,
+::ng-deep .rag-green {
+  background-color: #33cc3344 !important;
+}
+
+.ag-theme-alpine .rag-blue,
+::ng-deep .rag-blue {
+  background-color: #2244cc44 !important;
+}
+
+.ag-theme-alpine .rag-red,
+::ng-deep .rag-red {
+  background-color: #cc222244 !important;
+}
+
+/* For year column styling */
+.ag-theme-alpine .rag-green-outer,
+::ng-deep .rag-green-outer {
+  background-color: #33cc3344 !important;
+  font-weight: bold;
+}
+
+.ag-theme-alpine .rag-blue-outer,
+::ng-deep .rag-blue-outer {
+  background-color: #2244cc44 !important;
+  font-weight: bold;
+}
+
+.ag-theme-alpine .rag-red-outer,
+::ng-deep .rag-red-outer {
+  background-color: #cc222244 !important;
+  font-weight: bold;
+}
+
+/* For the custom renderer - Fixed the typo in rag-blue-outer */
+.rag-red-outer .rag-element {
+  background-color: #cc222244 !important;
+}
+
+.rag-green-outer .rag-element {
+  background-color: #33cc3344 !important;
+}
+
+.rag-blue-outer .rag-element { /* Fixed: was rag-blue-blue */
+  background-color: #2244cc44 !important;
+}
+
+.ag-theme-alpine .rag-element,
+::ng-deep .rag-element {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+.ag-theme-alpine .ag-cell.ag-column-first,
+::ng-deep .ag-cell.ag-column-first {
+  background-color: #2244CC44 !important;
+}
+
+
+.ag-theme-alpine .ag-cell.ag-column-last,
+::ng-deep .ag-cell.ag-column-last {
+  background-color: #CC333344 !important;
+}
