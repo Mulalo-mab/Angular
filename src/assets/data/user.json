@@ -1,0 +1,122 @@
+[
+  {
+    "Edit": "",
+    "Id": "1",
+    "Name": "Mulalo",
+    "Location": "Kraaifontein",
+    "age": 24,
+    "Money": "50"
+  },
+  {
+    "Edit": "",
+    "Id": "2",
+    "Name": "Sarah",
+    "Location": "Cape Town",
+    "age": 28,
+    "Money": "75"
+  },
+  {
+    "Edit": "",
+    "Id": "3",
+    "Name": "John",
+    "Location": "Johannesburg",
+    "age": 32,
+    "Money": "120"
+  },
+  {
+    "Edit": "",
+    "Id": "4",
+    "Name": "Emily",
+    "Location": "Durban",
+    "age": 22,
+    "Money": "45"
+  },
+  {
+    "Edit": "",
+    "Id": "5",
+    "Name": "David",
+    "Location": "Pretoria",
+    "age": 35,
+    "Money": "200"
+  },
+  {
+    "Edit": "",
+    "Id": "6",
+    "Name": "Lisa",
+    "Location": "Port Elizabeth",
+    "age": 29,
+    "Money": "85"
+  },
+  {
+    "Edit": "",
+    "Id": "7",
+    "Name": "Michael",
+    "Location": "Bloemfontein",
+    "age": 31,
+    "Money": "150"
+  },
+  {
+    "Edit": "",
+    "Id": "8",
+    "Name": "Jessica",
+    "Location": "Stellenbosch",
+    "age": 26,
+    "Money": "60"
+  },
+  {
+    "Edit": "",
+    "Id": "9",
+    "Name": "Daniel",
+    "Location": "East London",
+    "age": 33,
+    "Money": "180"
+  },
+  {
+    "Edit": "",
+    "Id": "10",
+    "Name": "Amanda",
+    "Location": "Kimberley",
+    "age": 27,
+    "Money": "95"
+  },
+  {
+    "Edit": "",
+    "Id": "11",
+    "Name": "Kevin",
+    "Location": "Polokwane",
+    "age": 30,
+    "Money": "110"
+  },
+  {
+    "Edit": "",
+    "Id": "12",
+    "Name": "Rachel",
+    "Location": "Nelspruit",
+    "age": 25,
+    "Money": "70"
+  },
+  {
+    "Edit": "",
+    "Id": "13",
+    "Name": "Brian",
+    "Location": "Rustenburg",
+    "age": 34,
+    "Money": "160"
+  },
+  {
+    "Edit": "",
+    "Id": "14",
+    "Name": "Nicole",
+    "Location": "Welkom",
+    "age": 23,
+    "Money": "55"
+  },
+  {
+    "Edit": "",
+    "Id": "15",
+    "Name": "Steven",
+    "Location": "Pietermaritzburg",
+    "age": 36,
+    "Money": "220"
+  }
+]

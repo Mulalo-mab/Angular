@@ -10,7 +10,7 @@ import { Filter } from './filter/filter';
 import { Edit } from './edit/edit';
 import { UpdateRow } from './update-row/update-row';
 import { Buttons } from './buttons/buttons';
-
+import { ButtonsForm } from './buttons/buttons-form/buttons-form';
 
 const routes: Routes = [
   {
@@ -26,6 +26,8 @@ const routes: Routes = [
       { path: 'edit', component: Edit },
       { path: 'update', component: UpdateRow },
       { path: 'button', component: Buttons },
+      { path: 'button/create', component: ButtonsForm },
+      { path: 'button/edit/:id', component: ButtonsForm}
     ]
   }
 ];

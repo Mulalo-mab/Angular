@@ -1,0 +1,110 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mainDv" style="padding:1rem">
+  <div class="panel panel-info" [class.custom-edit-panel]="isEditMode">
+    <div class="panel-heading" [class.custom-edit-header]="isEditMode">
+      <p [class.edit-title]="isEditMode">{{ isEditMode ? 'Edit User' : 'Create New User' }}</p>
+    </div>
+
+    <div class="panel-body" *ngIf="!isEditMode">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#">User Record</a>
+        </li>
+      </ul>
+      <br>
+    </div>
+
+    <br *ngIf="isEditMode" />
+    <div class="col-md-12">
+      <div class="tab-content">
+        <div class="tab-pane fade in active">
+
+          <!-- User ID (Only shown in edit mode) -->
+          <div class="form-group" *ngIf="isEditMode">
+            <label for="userId" class="control-label col-md-2">
+              User ID
+            </label>
+            <div class="col-md-7">
+              <input type="text" id="userId" class="form-control" formControlName="Id" readonly>
+            </div>
+          </div>
+
+          <!-- Name Field -->
+          <div class="form-group">
+            <label for="userName" class="control-label col-md-2">
+              Name *
+            </label>
+            <div class="col-md-7">
+              <input type="text" id="userName" class="form-control" formControlName="Name"
+                     placeholder="Enter full name">
+              <div *ngIf="userForm.get('Name')?.invalid && userForm.get('Name')?.touched"
+                   class="text-danger">
+                Name is required
+              </div>
+            </div>
+          </div>
+
+          <!-- Location Field -->
+          <div class="form-group">
+            <label for="userLocation" class="control-label col-md-2">
+              Location *
+            </label>
+            <div class="col-md-7">
+              <input type="text" id="userLocation" class="form-control" formControlName="Location"
+                     placeholder="Enter location">
+              <div *ngIf="userForm.get('Location')?.invalid && userForm.get('Location')?.touched"
+                   class="text-danger">
+                Location is required
+              </div>
+            </div>
+          </div>
+
+          <!-- Age Field -->
+          <div class="form-group">
+            <label for="userAge" class="control-label col-md-2">
+              Age *
+            </label>
+            <div class="col-md-7">
+              <input type="number" id="userAge" class="form-control" formControlName="age"
+                     placeholder="Enter age" min="18" max="100">
+              <div *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched"
+                   class="text-danger">
+                <span *ngIf="userForm.get('age')?.errors?.['required']">Age is required</span>
+                <span *ngIf="userForm.get('age')?.errors?.['min']">Age must be at least 18</span>
+                <span *ngIf="userForm.get('age')?.errors?.['max']">Age must be less than 100</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Money Field -->
+          <div class="form-group">
+            <label for="userMoney" class="control-label col-md-2">
+              Money (R) *
+            </label>
+            <div class="col-md-7">
+              <input type="number" id="userMoney" class="form-control" formControlName="Money"
+                     placeholder="Enter amount" min="0">
+              <div *ngIf="userForm.get('Money')?.invalid && userForm.get('Money')?.touched"
+                   class="text-danger">
+                <span *ngIf="userForm.get('Money')?.errors?.['required']">Money is required</span>
+                <span *ngIf="userForm.get('Money')?.errors?.['min']">Amount cannot be negative</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+              <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+                {{ isEditMode ? 'Update User' : 'Create User' }}
+              </button>
+              <button type="button" class="btn btn-default" (click)="onCancel()" style="margin-left: 10px;">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

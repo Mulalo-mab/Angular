@@ -1,0 +1,92 @@
+.panel {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+
+
+.create-new-link {
+  color: #337ab7;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 2px 0;
+  display: inline-block;
+  transition: color 0.2s ease-in-out;
+}
+
+
+  .create-new-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+.panel-heading {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  padding: 10px 15px;
+  color: #31708f;
+}
+
+.panel-body {
+  padding-top: 20px;
+  padding-bottom: 0px
+}
+
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+  padding-left: 0;
+  margin: 0 0 10px;
+  list-style: none;
+  display: flex;
+}
+
+  .nav-tabs li {
+    margin-bottom: -1px;
+  }
+
+  .nav-tabs a {
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    text-decoration: none;
+    color: #555;
+  }
+
+  .nav-tabs .active a {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+  }
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 4px;
+}
+
+
+::ng-deep .ag-theme-alpine .ag-cell.rag-green {
+  background-color: #33cc3344 !important;
+}
+
+::ng-deep .ag-theme-alpine .ag-cell.rag-blue {
+  background-color: #2244cc44 !important;
+}
+
+::ng-deep .ag-theme-alpine .ag-cell.rag-red {
+  background-color: #cc222244 !important;
+}
+
+
+
+::ng-deep .ag-theme-alpine .ag-row.ag-row-first {
+  background-color: #CC333344;
+}
