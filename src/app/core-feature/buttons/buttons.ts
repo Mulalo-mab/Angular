@@ -157,6 +157,9 @@ export class Buttons implements OnInit {
       cellEditorParams: {
         min: 0,
         max: 100,
+         precision: 2,
+        step: 1,
+        showStepperButtons: true
       }
     },
     {
