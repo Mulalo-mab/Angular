@@ -1,51 +1,15 @@
-
-<div class="row mb-2">
-  <div class="col">
-    <p class="mb-0">
-      <a class="create-new-link" (click)="openCreateForm()" style="cursor: pointer;">
-        Create New
-      </a>
-    </p>
-  </div>
+<div class="main-grid-container">
+  <ag-grid-angular class="ag-theme-alpine main-athletes-grid"
+                   style="height: 500px; width: 100%;"
+                   [rowData]="rowData"
+                   [columnDefs]="columnDefs"
+                   [defaultColDef]="defaultColDef"
+                   [gridOptions]="gridOptions"
+                   theme="legacy">
+  </ag-grid-angular>
 </div>
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <div class="d-flex justify-content-between align-items-center">
-      <span>Index</span>
-    </div>
-  </div>
 
-
-
-  <div class="panel-body">
-    <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#">Customer Record</a>
-      </li>
-      <li><a>Index</a></li>
-    </ul>
-    <br>
-    <!-- ADD YOUR AG GRID IN THIS DIV -->
-    <div>
-
-      <ag-grid-angular class="ag-theme-alpine" style="height: 500px"
-                       [rowData]="rowData"
-                       [pagination]="true"
-                       [columnDefs]="colDefs"
-                       [defaultColDef]="defaultColDef"
-                       theme="legacy"></ag-grid-angular>
-    </div>
-
-    <!-- Pagination Section -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
-      <div class="d-flex align-items-center gap-3">
-        <!-- Your pagination buttons here -->
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 <div class="modal-backdrop" *ngIf="showSelectionModal" (click)="closeSelectionModal()"></div>
@@ -53,14 +17,19 @@
 <div class="selection-modal" *ngIf="showSelectionModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Select Option</h5>
+      <h5 class="modal-title">
+        <span *ngIf="currentEditingRow">
+          Selection for {{ currentEditingRow.athlete }} - {{ currentEditingRow.sport }}
+        </span>
+        <span *ngIf="!currentEditingRow">Select Option</span>
+      </h5>
       <button type="button" class="close-btn" (click)="closeSelectionModal()">&times;</button>
     </div>
 
     <div class="modal-body">
       <!-- Search Filter -->
       <div class="form-group">
-        <label>Filter...</label>
+        <label></label>
         <input type="text"
                class="form-control search-input"
                placeholder="Type to search..."
@@ -74,14 +43,26 @@
                          [rowData]="filteredSelectionItems"
                          [columnDefs]="selectionColDefs"
                          [defaultColDef]="selectionDefaultColDef"
-                         [rowSelection]="'single'" 
+                         [rowSelection]="'single'"
                          (selectionChanged)="onSelectionChanged($event)"
                          (rowDoubleClicked)="onRowDoubleClicked($event)"
                          [suppressCellFocus]="true"
                          theme="legacy"
                          style="height: 300px; width: 100%;">
-</ag-grid-angular>
+        </ag-grid-angular>
       </div>
+
+      <!-- Selected Item Preview
+  <div class="selected-preview" *ngIf="selectedGridItem">
+    <h6>Selected:</h6>
+    <div class="preview-card">
+      <strong>{{ selectedGridItem.list }}</strong>
+      <br>
+      <small class="text-muted">{{ selectedGridItem.code }}</small>
+      <br>
+      <span>{{ selectedGridItem.description }}</span>
+    </div>
+  </div> -->
     </div>
 
     <div class="modal-footer">
@@ -90,7 +71,7 @@
               class="btn btn-primary"
               (click)="confirmSelection()"
               [disabled]="!selectedGridItem">
-        Select
+        Select & Apply
       </button>
     </div>
   </div>

@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
-import { ButtonsService, User } from './buttons-service';
-import { Router } from '@angular/router';
-import { GridOptions, RowSelectionOptions } from 'ag-grid-community';
-
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
-
-ModuleRegistry.registerModules([AllCommunityModule]);
+import { ButtonsService, User, SelectionItem } from './buttons-service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -23,89 +17,22 @@ export class Buttons implements OnInit {
   isEditMode: boolean = false;
   selectedUser: User | null = null;
 
-  constructor(private buttonsService: ButtonsService,
-    private router: Router,
-    ) { }
+  currentEditingRow: any = null;
 
-  ngOnInit() {
-    this.loadUsers();
-  }
+  showSelectionModal: boolean = false;
+  searchFilter: string = '';
+  selectionItems: SelectionItem[] = [];
+  filteredSelectionItems: SelectionItem[] = [];
+  selectedGridItem: SelectionItem | null = null;
 
-  loadUsers() {
-    this.buttonsService.getUsers().subscribe({
-      next: (users) => {
-        this.rowData = users;
-        console.log('Users loaded successfully:', users);
-      },
-      error: (error) => {
-        console.error('Error loading users:', error);
-      }
-    });
-  }
-
-  openCreateForm() {
-    console.log('Navigating to create form...');
-    this.router.navigate(['/button/create']).then(success => {
-      console.log('Navigation successful:', success);
-    }).catch(error => {
-      console.error('Navigation failed:', error);
-    });
-  }
-
-  onEditClick(userData: User): void {
-    console.log('Edit clicked for user:', userData);
-    console.log('Navigating to edit form with ID:', userData.Id);
-    this.router.navigate(['/button/edit', userData.Id]).then(success => {
-      console.log('Navigation successful:', success);
-    }).catch(error => {
-      console.error('Navigation failed:', error);
-    });
-  }
-
-  onFormSubmit(userData: User) {  // Make sure parameter is User type
-    if (this.isEditMode) {
-      this.buttonsService.updateUser(userData).subscribe(updatedUser => {
-        console.log('User updated:', updatedUser);
-        this.refreshData();
-        this.showUserForm = false;
-      });
-    } else {
-      this.buttonsService.addUser(userData).subscribe(newUser => {
-        console.log('User created:', newUser);
-        this.refreshData();
-        this.showUserForm = false;
-      });
-    }
-  }
-
-
-  // Handle form cancellation
-  onFormCancel() {
-    this.showUserForm = false;
-    this.selectedUser = null;
-  }
-
-  refreshData() {
-    this.buttonsService.refreshData();
-    this.loadUsers();
-  }
-
-
-
-
-
-  defaultColDef = {
-    flex: 1,
-    editable: true
-  };
+  selectionColDefs: any[] = [];
+  selectionDefaultColDef: any = {};
 
   colDefs: ColDef[] = [
     {
       field: 'Edit',
       cellRenderer: () => {
-        return `
-         <i class="material-icons" style="cursor: pointer; font-size: 24px; color: black;">edit</i>
-`;
+        return `<i class="material-icons" style="cursor: pointer; font-size: 24px; color: black;">edit</i>`;
       },
       onCellClicked: (event: any) => {
         this.onEditClick(event.data);
@@ -139,7 +66,7 @@ export class Buttons implements OnInit {
       cellEditorParams: {
         min: 0,
         max: 100,
-        precision: 2,
+        precision: 0,
         step: 1,
         showStepperButtons: true
       },
@@ -157,27 +84,43 @@ export class Buttons implements OnInit {
       cellEditorParams: {
         min: 0,
         max: 100,
-         precision: 2,
+        precision: 0,
         step: 1,
         showStepperButtons: true
       }
     },
     {
-      field: "Archaive",
+      field: "Status",
+      headerName: "Status",
+      maxWidth: 200,
+      editable: false,
+      cellStyle: {'background-color': 'cyan' },
+      valueGetter: (params: any) => {
+        return params.data.Status || 'Not Selected';
+      },
+      cellRenderer: (params: any) => {
+        const status = params.data.Status || 'Not Selected';
+        return `${status}`;
+      },
+      onCellClicked: (event: any) => {
+        this.currentEditingRow = event.data;
+        this.openSelectionModal();
+      }
+    },
+    {
+      field: "Archive",
       editable: false,
       cellRenderer: () => {
-        return '<button class="btn btn-sm" style = "border-color: #17a2b8; background-color: #17a2b8; color: white; padding: 0.15rem 0.5rem;" > Archive </button>';
+        return '<button class="btn btn-sm" style="border-color: #17a2b8; background-color: #17a2b8; color: white; padding: 0.15rem 0.5rem;">Archive</button>';
       },
       onCellClicked: (event: any) => {
         this.onArchiveClick(event.data)
       },
     },
     {
-      field: "#",
+      field: "Delete",
       cellRenderer: () => {
-        return `
-          <i class="material-icons" style="cursor: pointer; font-size: 24px; color: black;">delete</i>
-`;
+        return `<i class="material-icons" style="cursor: pointer; font-size: 24px; color: black;">delete</i>`;
       },
       onCellClicked: (event: any) => {
         this.onDeleteClick(event.data)
@@ -185,11 +128,157 @@ export class Buttons implements OnInit {
     }
   ];
 
-  
+  defaultColDef = {
+    flex: 1,
+    editable: true
+  };
+
+  constructor(
+    private buttonsService: ButtonsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+    this.selectionColDefs = this.buttonsService.getSelectionColDefs();
+    this.selectionDefaultColDef = this.buttonsService.getSelectionDefaultColDef();
+    this.loadUsers();
+  }
+
+ 
+  openSelectionModal() {
+    if (!this.currentEditingRow) {
+      console.error('No row selected for editing');
+      return;
+    }
+
+    const userAge = this.currentEditingRow.age;
+    console.log(`Generating options for age: ${userAge}`);
+
+    this.selectionItems = this.buttonsService.generateSelectionItemsBasedOnAge(userAge);
+    this.filteredSelectionItems = [...this.selectionItems];
+
+    this.showSelectionModal = true;
+    this.searchFilter = '';
+    this.selectedGridItem = null;
+  }
+
+  closeSelectionModal() {
+    this.showSelectionModal = false;
+    this.selectedGridItem = null;
+    this.currentEditingRow = null;
+  }
+
+  onSearchFilterChange(filterValue: string) {
+    console.log('Filtering:', filterValue);
+    if (!filterValue.trim()) {
+      this.filteredSelectionItems = [...this.selectionItems];
+    } else {
+      const filterLower = filterValue.toLowerCase().trim();
+      this.filteredSelectionItems = this.selectionItems.filter(item =>
+        item.list.toLowerCase().includes(filterLower) ||
+        item.code.toLowerCase().includes(filterLower) ||
+        item.description.toLowerCase().includes(filterLower)
+      );
+    }
+  }
+
+  onSelectionChanged(event: any) {
+    const selectedRows = event.api.getSelectedRows();
+    this.selectedGridItem = selectedRows.length > 0 ? selectedRows[0] : null;
+  }
+
+  onRowDoubleClicked(event: any) {
+    this.selectedGridItem = event.data;
+    this.confirmSelection();
+  }
+
+  confirmSelection() {
+    if (this.selectedGridItem && this.currentEditingRow) {
+      console.log('Selected item:', this.selectedGridItem);
+
+      const selectedStatus = this.selectedGridItem.code;
+      const userId = this.currentEditingRow.Id;
+
+      this.buttonsService.updateUserStatus(userId, selectedStatus).subscribe({
+        next: (response) => {
+          console.log('Status updated successfully:', response);
+          alert(`Status updated to: ${selectedStatus}`);
+
+          this.loadUsers();
+        },
+        error: (error) => {
+          console.error('Error updating status:', error);
+          alert('Error updating status. Please try again.');
+        }
+      });
+
+      this.closeSelectionModal();
+    }
+  }
+
+  // update user status in backend
+  updateUserStatus(userId: string, status: string) {
+    this.buttonsService.updateUserStatus(userId, status).subscribe({
+      next: (response) => {
+        console.log('Status updated in backend:', response);
+      },
+      error: (error) => {
+        console.error('Error updating status:', error);
+      }
+    });
+  }
+
+  loadUsers() {
+    this.buttonsService.getUsers().subscribe({
+      next: (users) => {
+        // Initialize Status for each user if not exists
+        this.rowData = users.map(user => ({
+          ...user,
+          Status: user.Status || 'Not Selected'
+        }));
+        console.log('Users loaded successfully:', users);
+      },
+      error: (error) => {
+        console.error('Error loading users:', error);
+      }
+    });
+  }
+
+  openCreateForm() {
+    console.log('Navigating to create form...');
+    this.router.navigate(['create'], { relativeTo: this.route }).then(success => {
+      console.log('Navigation successful:', success);
+    }).catch(error => {
+      console.error('Navigation failed:', error);
+      this.router.navigate(['/button/create']).then(success => {
+        console.log('Absolute navigation successful:', success);
+      }).catch(error2 => {
+        console.error('Absolute navigation also failed:', error2);
+      });
+    });
+  }
+
+  onEditClick(userData: User): void {
+    console.log('Edit clicked for user:', userData);
+    if (userData.Id) {
+      this.router.navigate(['edit', userData.Id], { relativeTo: this.route }).then(success => {
+        console.log('Navigation successful:', success);
+      }).catch(error => {
+        console.error('Navigation failed:', error);
+        this.router.navigate(['/button/edit', userData.Id]).then(success => {
+          console.log('Absolute navigation successful:', success);
+        }).catch(error2 => {
+          console.error('Absolute navigation also failed:', error2);
+        });
+      });
+    } else {
+      console.error('User ID is undefined');
+    }
+  }
 
   onArchiveClick(userData: User): void {
     console.log('Archive clicked for user:', userData);
-
     if (confirm(`Are you sure you want to archive ${userData.Name}?`)) {
       this.buttonsService.archiveUser(userData.Id).subscribe(success => {
         if (success) {
@@ -200,11 +289,8 @@ export class Buttons implements OnInit {
     }
   }
 
-  
-
   onDeleteClick(userData: User): void {
     console.log('Delete clicked for user:', userData);
-
     if (confirm(`Are you sure you want to permanently DELETE ${userData.Name}? This action cannot be undone.`)) {
       this.buttonsService.deleteUser(userData.Id).subscribe({
         next: (success) => {
@@ -224,5 +310,4 @@ export class Buttons implements OnInit {
       });
     }
   }
-
 }

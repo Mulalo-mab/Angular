@@ -5,12 +5,12 @@
     "\\src\\app",
     "\\src\\app\\core-feature",
     "\\src\\app\\core-feature\\buttons",
-    "\\src\\app\\post",
+    "\\src\\app\\core-feature\\buttons\\buttons-form",
     "\\src\\app\\post\\post-component",
     "\\src\\app\\post\\post-component\\post-form",
     "\\src\\assets",
     "\\src\\assets\\data"
   ],
-  "SelectedNode": "\\src\\app\\core-feature\\buttons\\buttons.ts",
+  "SelectedNode": "\\src\\app\\core-feature\\buttons\\buttons-form\\buttons-form.html",
   "PreviewInSolutionExplorer": false
 }

@@ -1,102 +1,125 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ButtonsService, User } from '../buttons-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonsFormService } from './buttons-form-service';
 
 @Component({
-  selector: 'app-buttons-form',
+  selector: 'app-button-form',
   standalone: false,
   templateUrl: './buttons-form.html',
   styleUrl: './buttons-form.css'
 })
 export class ButtonsForm implements OnInit {
+  userForm: FormGroup;
+  isEditMode = false;
+  userId: string | null = null;
+  user: any = null;
 
-  @Input() user: User | null = null;
-  @Input() isEditMode: boolean = false;
-  @Output() formSubmit = new EventEmitter<User>();
-  @Output() formCancel = new EventEmitter<void>();
-
-
-  userForm!: FormGroup;
-
-  constructor(private fb: FormBuilder,
-    private buttonsService: ButtonsService,
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router ) { }
-
-  ngOnInit() {
-    this.initializeForm();
-
-    console.log('Current route params:', this.route.snapshot.params);
-
-    this.route.params.subscribe(params => {
-      console.log('Route params changed:', params);
-      if (params['id']) {
-        this.isEditMode = true;
-        console.log('Edit mode, loading user ID:', params['id']);
-        this.loadUserData(params['id']);
-      } else {
-        this.isEditMode = false;
-        console.log('Create mode');
-      }
-    });
+    private router: Router,
+    private buttonsFormService: ButtonsFormService
+  ) {
+    this.userForm = this.createForm();
   }
 
+  ngOnInit(): void {
+    this.userId = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.userId;
 
-  initializeForm() {
-    this.userForm = this.fb.group({
-      Id: [''],
+    if (this.isEditMode && this.userId) {
+      this.loadUser();
+    }
+  }
+
+  createForm(): FormGroup {
+    return this.fb.group({
+      Id: [''], 
       Name: ['', [Validators.required, Validators.minLength(2)]],
-      Location: ['', [Validators.required]],
+      Location: ['', [Validators.required, Validators.minLength(2)]],
       age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
-      Money: ['', [Validators.required, Validators.min(0)]],
-      Edit: ['']
+      Money: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
-  loadUserData(userId: string) {
-    this.buttonsService.getUserById(userId).subscribe(user => {
-      if (user) {
-        this.userForm.patchValue(user);
-      }
-    });
-  }
-
-
-
-  onSubmit() {
-    if (this.userForm.valid) {
-      const formData = this.userForm.value;
-
-      if (this.isEditMode) {
-        this.buttonsService.updateUser(formData).subscribe(updatedUser => {
-          console.log('User updated:', updatedUser);
-          this.router.navigate(['/users']); // Navigate back to user list
-        });
-      } else {
-        // For new users, generate ID if not provided
-        if (!formData.Id) {
-          formData.Id = this.generateUserId();
-        }
-
-        this.buttonsService.addUser(formData).subscribe(newUser => {
-          console.log('User created:', newUser);
-          this.router.navigate(['/users']); // Navigate back to user list
-        });
-      }
-    } else {
-      Object.keys(this.userForm.controls).forEach(key => {
-        this.userForm.get(key)?.markAsTouched();
+  loadUser(): void {
+    if (this.userId) {
+      this.buttonsFormService.getUserById(this.userId).subscribe({
+        next: (data) => {
+          this.user = data;
+          this.userForm.patchValue(data);
+        },
+        error: (error) => console.error('Error loading user', error)
       });
     }
   }
 
-  onCancel() {
-    this.router.navigate(['/users']); // Navigate back to user list
+  onSubmit(): void {
+    if (this.userForm.valid) {
+      const formData = this.userForm.value;
+
+      if (this.isEditMode && this.userId) {
+        this.buttonsFormService.updateUser(this.userId, formData).subscribe({
+          next: () => {
+            alert('User updated successfully!');
+            this.goBack();
+          },
+          error: (error) => {
+            console.error('Error updating user', error);
+            alert('Error updating user. Please try again.');
+          }
+        });
+      } else {
+        this.buttonsFormService.createUser(formData).subscribe({
+          next: () => {
+            alert('User created successfully!');
+            this.goBack();
+          },
+          error: (error) => {
+            console.error('Error creating user', error);
+            alert('Error creating user. Please try again.');
+          }
+        });
+      }
+    } else {
+      this.markFormGroupTouched();
+      alert('Please fill all required fields correctly.');
+    }
   }
 
-  private generateUserId(): string {
-    return Date.now().toString();
+  onCancel(): void {
+    this.goBack();
   }
 
+  private markFormGroupTouched(): void {
+    Object.keys(this.userForm.controls).forEach(key => {
+      const control = this.userForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  // Form validation helpers
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.userForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
+  }
+
+  getFieldError(fieldName: string): string {
+    const field = this.userForm.get(fieldName);
+    if (field?.errors) {
+      if (field.errors['required']) return 'This field is required';
+      if (field.errors['minlength']) return `Minimum length is ${field.errors['minlength'].requiredLength}`;
+      if (field.errors['min']) {
+        if (fieldName === 'age') return 'Age must be at least 18';
+        if (fieldName === 'Money') return 'Amount cannot be negative';
+      }
+      if (field.errors['max']) return 'Age must be less than 100';
+    }
+    return '';
+  }
 }

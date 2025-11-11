@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { CoreFeatureRoutingModule } from './core-feature-routing-module';
 import { CoreFeature } from './core-feature';
@@ -16,6 +17,7 @@ import { Edit } from './edit/edit';
 import { UpdateRow } from './update-row/update-row';
 import { Buttons } from './buttons/buttons';
 import { ButtonsForm } from './buttons/buttons-form/buttons-form';
+import { Result } from './result/result';
 
 
 @NgModule({
@@ -30,13 +32,15 @@ import { ButtonsForm } from './buttons/buttons-form/buttons-form';
     Edit,
     UpdateRow,
     Buttons,
-    ButtonsForm
+    ButtonsForm,
+    Result
   ],
   imports: [
     CommonModule,
     AgGridModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     CoreFeatureRoutingModule
   ]
 })

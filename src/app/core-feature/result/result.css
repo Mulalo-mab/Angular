@@ -1,0 +1,244 @@
+.ag-grid-container {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.panel-heading {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+  padding: 15px 20px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.selection-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  width: 80%;
+  max-width: 900px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  .close-btn:hover {
+    color: #495057;
+    background-color: #e9ecef;
+    border-radius: 50%;
+  }
+
+.modal-body {
+  padding: 1.5rem;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.search-input {
+  margin-bottom: 0;
+  justify-content: center;
+}
+
+/* Selection Grid Styles */
+.selection-grid {
+  --ag-border-color: #dee2e6;
+  --ag-header-background-color: #f8f9fa;
+  --ag-odd-row-background-color: #fafafa;
+}
+
+  .selection-grid .ag-row:hover {
+    background-color: #e3f2fd !important;
+    cursor: pointer;
+  }
+
+  .selection-grid .ag-row-selected {
+    background-color: #bbdefb !important;
+  }
+
+/* Selected Preview Styles */
+.selected-preview {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1rem;
+}
+
+  .selected-preview h6 {
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-weight: 600;
+  }
+
+.preview-card {
+  background-color: #e8f5e8;
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+  .preview-card strong {
+    color: #2e7d32;
+    font-size: 1.1em;
+  }
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+
+  .btn-primary:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+  .btn-secondary:hover {
+    background-color: #545b62;
+  }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .selection-modal {
+    width: 95%;
+    max-width: none;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .ag-grid-container {
+    margin-bottom: 10px;
+  }
+}
+
+/* AG Grid Theme Overrides */
+.ag-theme-alpine {
+  --ag-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ag-font-size: 14px;
+}
+
+  .ag-theme-alpine .ag-header-cell-text {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .ag-theme-alpine .ag-cell {
+    border-right: 1px solid #f0f0f0;
+  }
+
+  /* Clickable cells styling */
+  .ag-theme-alpine [col-id="athlete"],
+  .ag-theme-alpine [col-id="sport"] {
+    cursor: pointer;
+    color: #007bff;
+  }
+
+    .ag-theme-alpine [col-id="athlete"]:hover,
+    .ag-theme-alpine [col-id="sport"]:hover {
+      background-color: #f8f9fa;
+      text-decoration: underline;
+    }
+
+
+::ng-deep .main-athletes-grid .ag-row:hover {
+  --ag-row-hover-color: red;
+  --ag-column-hover-color: red;
+}

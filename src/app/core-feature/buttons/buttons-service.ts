@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap, of, throwError } from 'rxjs';
+import { catchError, delay } from 'rxjs/operators';
 
 export interface User {
   Edit?: string;
@@ -9,7 +10,15 @@ export interface User {
   Location: string;
   age: number;
   Money: string;
+  Status?: string;
 }
+
+export interface SelectionItem {
+  list: string;
+  code: string;
+  description: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +109,8 @@ export class ButtonsService {
     });
   }
 
+
+
   archiveUser(id: string): Observable<boolean> {
     console.log(`Archiving user ${id}`);
     // You can add archive logic here if needed
@@ -121,4 +132,93 @@ export class ButtonsService {
       }
     });
   }
+
+
+  // Selection items 
+  generateSelectionItemsBasedOnAge(userAge: number): SelectionItem[] {
+    let ageBasedItems: SelectionItem[] = [];
+
+
+    const generalItems: SelectionItem[] = [
+      { list: 'Perfect Age', code: 'Perfect Age', description: 'Age is between 20-25 years' },
+      { list: 'Good Age', code: 'Good Age', description: 'Age is between 25-30 years' },
+      { list: 'Too Old', code: 'Too Old', description: 'Age is above 30 years' }
+    ];
+
+    if (userAge >= 20 && userAge <= 25) {
+      ageBasedItems.push(
+        { list: 'Young & Energetic', code: 'Young & Energetic', description: 'Great time for career building' },
+        { list: 'Prime Learning Years', code: 'Prime Learning Years', description: 'Ideal for skill development' }
+      );
+    } else if (userAge > 25 && userAge <= 30) {
+      ageBasedItems.push(
+        { list: 'Career Growth Phase', code: 'Career Growth Phase', description: 'Time for professional advancement' },
+        { list: 'Experience Building', code: 'Experience Building', description: 'Gaining valuable experience' }
+      );
+    } else if (userAge > 30) {
+      ageBasedItems.push(
+        { list: 'Senior Level', code: 'Senior Level', description: 'Time for leadership roles' },
+        { list: 'Mature & Experienced', code: 'Mature & Experienced', description: 'Valuable experience gained' }
+      );
+    } else {
+      ageBasedItems.push(
+        { list: 'Too Young', code: 'Too Young', description: 'Age is below 20 years' },
+        { list: 'Early Stage', code: 'Early Stage', description: 'Still in development phase' }
+      );
+    }
+
+    return [...ageBasedItems, ...generalItems];
+  }
+
+  updateUserStatus(userId: string, status: string): Observable<any> {
+    const userIndex = this.users.findIndex(user => user.Id === userId);
+    if (userIndex !== -1) {
+      this.users[userIndex] = {
+        ...this.users[userIndex],
+        Status: status
+      };
+      this.usersSubject.next([...this.users]);
+    }
+
+    return this.http.patch(`${this.apiUrl}/${userId}/status`, { status }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log('Simulating status update');
+        return of({ success: true, message: 'Status updated successfully' }).pipe(delay(500));
+      })
+    );
+  }
+
+  getSelectionColDefs(): any[] {
+    return [
+      {
+        field: 'list',
+        headerName: 'List',
+        flex: 1,
+        filter: true
+      },
+      {
+        field: 'code',
+        headerName: 'Code',
+        flex: 1,
+        filter: true
+      },
+      {
+        field: 'description',
+        headerName: 'Description',
+        flex: 1,
+        filter: true
+      }
+    ];
+  }
+
+
+  getSelectionDefaultColDef(): any {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true
+    };
+  }
+
+
 }
