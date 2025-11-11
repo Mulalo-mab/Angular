@@ -1,0 +1,581 @@
+<div class="customer-edit-container">
+  <div class="header">
+    <div class="header-content">
+      <h2>Edit Customer</h2>
+      <div class="customer-info" *ngIf="customer">
+        <span class="company-code">{{ customer.companyCode }}</span>
+        <span class="last-modified">Last modified: {{ getLastModified() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">Customer Record</div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading customer data...</p>
+  </div>
+
+  <form *ngIf="!isLoading" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Company Information Section -->
+    <div class="form-section">
+      <h3>Company Information</h3>
+
+      <div class="form-group" [class.has-error]="isFieldInvalid('companyCode')">
+        <label class="control-label">Company Code</label>
+        <input type="text" class="form-control" formControlName="companyCode" readonly>
+      </div>
+
+      <div class="form-group" [class.has-error]="isFieldInvalid('companyName')">
+        <label class="control-label">Company Name *</label>
+        <input type="text" class="form-control" formControlName="companyName"
+               placeholder="Enter company name">
+        <span class="error-message" *ngIf="isFieldInvalid('companyName')">
+          {{ getFieldError('companyName') }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Registered Company Name</label>
+        <input type="text" class="form-control" formControlName="registeredCompanyName"
+               placeholder="Enter registered company name">
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Previous Name</label>
+        <input type="text" class="form-control" formControlName="prevCompanyName" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Account Number</label>
+        <input type="text" class="form-control" formControlName="accountNumber">
+      </div>
+    </div>
+
+    <!-- Include all other form sections from create component -->
+    <!-- Physical Address Section -->
+    <div class="form-section">
+      <h3>Physical Address</h3>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 1</label>
+        <input type="text" class="form-control" formControlName="addressLine1" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 2</label>
+        <input type="text" class="form-control" formControlName="addressLine2" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 3</label>
+        <input type="text" class="form-control" formControlName="addressLine3" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Suburb</label>
+        <input type="text" class="form-control" formControlName="suburb" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">City</label>
+        <input type="text" class="form-control" formControlName="city" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Area</label>
+        <input type="text" class="form-control" formControlName="area" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Country</label>
+        <input type="text" class="form-control" formControlName="country" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Code</label>
+        <input type="text" class="form-control" formControlName="postalCode" />
+      </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="form-section">
+      <h3>Contact Information</h3>
+
+      <div class="form-group">
+        <label class="control-label">Telephone</label>
+        <input type="tel" class="form-control" formControlName="telephone" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Alt Phone</label>
+        <input type="text" class="form-control" formControlName="altPhone" />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Fax</label>
+        <input type="text" class="form-control" formControlName="fax" />
+      </div>
+    </div>
+
+    <!-- Classification Section -->
+    <div class="form-section">
+      <h3>Classification</h3>
+
+      <div class="form-group">
+        <label class="control-label">Customer Segment</label>
+        <div class="input-container">
+          <select multiple class="form-control" formControlName="listing">
+            <option *ngFor="let item of dropdownData.listings" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Industry Types</label>
+        <div class="input-container">
+          <select multiple class="form-control" formControlName="industryType">
+            <option *ngFor="let item of dropdownData.industryTypes" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Service Types</label>
+        <div class="input-container">
+          <select multiple class="form-control" formControlName="serviceType">
+            <option *ngFor="let item of dropdownData.serviceTypes" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial Address Section -->
+    <div class="form-section">
+      <h3>Financial Address</h3>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 1</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finAddressLine1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 2</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finAddressLine2">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Address Line 3</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finAddressLine3">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Suburb</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finSuburb">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial City</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finCity">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Postal Code</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finPostalCode">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Region</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finRegion">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Country</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finCountry">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Phone</label>
+        <div class="input-container">
+          <input type="tel" class="form-control" formControlName="finTelephone">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Financial Fax</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="finFax">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">VAT Reg #</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="tax">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Website</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="website">
+        </div>
+      </div>
+    </div>
+
+    <!-- Assigned Section -->
+    <div class="form-section">
+      <h3>Assigned Information</h3>
+
+      <div class="form-group">
+        <label class="control-label">Assigned To</label>
+        <div class="input-container">
+          <select class="form-control" formControlName="assignedTo">
+            <option value="">Select User</option>
+            <option *ngFor="let item of dropdownData.assignedToUsers" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Product</label>
+        <div class="input-container">
+          <select multiple class="form-control" formControlName="product">
+            <option *ngFor="let item of dropdownData.products" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Zone</label>
+        <div class="input-container">
+          <select class="form-control" formControlName="zone">
+            <option value="">Select Zone</option>
+            <option *ngFor="let item of dropdownData.zones" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Postal Address Section -->
+    <div class="form-section">
+      <h3>Postal Address</h3>
+
+      <div class="form-group">
+        <label class="control-label">Postal Address Line 1</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posAddress1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Address Line 2</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posAddress2">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Address Line 3</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posAddress3">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Suburb</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posSuburb">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal City</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posCity">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Code</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posZipCode">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Province</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posRegion">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Postal Country</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="posCountry">
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="form-section">
+      <h3>Settings</h3>
+
+      <div class="form-group">
+        <label class="control-label">PO Required?</label>
+        <div class="input-container">
+          <select class="form-control" formControlName="poRequired">
+            <option value="">Select Option</option>
+            <option *ngFor="let item of dropdownData.poRequiredOptions" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Account Type</label>
+        <div class="input-container">
+          <select class="form-control" formControlName="accountType">
+            <option value="">Select Account Type</option>
+            <option *ngFor="let item of dropdownData.accountTypes" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Region</label>
+        <div class="input-container">
+          <select class="form-control" formControlName="region">
+            <option value="">Select Region</option>
+            <option *ngFor="let item of dropdownData.regions" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- GPS Section -->
+    <div class="form-section">
+      <h3>GPS Coordinates</h3>
+
+      <div class="form-group">
+        <label class="control-label">GPS</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="gps" readonly>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">GPS Format</label>
+        <div class="input-container">
+          <div class="radio-group">
+            <label>
+              <input type="radio" [value]="'DD'" [checked]="gpsFormat === 'DD'"
+                     (change)="onGpsFormatChange('DD')"> DD
+            </label>
+            <label>
+              <input type="radio" [value]="'DM'" [checked]="gpsFormat === 'DM'"
+                     (change)="onGpsFormatChange('DM')"> DM
+            </label>
+            <label>
+              <input type="radio" [value]="'DMS'" [checked]="gpsFormat === 'DMS'"
+                     (change)="onGpsFormatChange('DMS')"> DMS
+            </label>
+          </div>
+          <p class="format-description">
+            {{gpsFormat === 'DD' ? 'Degrees' : gpsFormat === 'DM' ? 'Degrees Minutes' : 'Degrees Minutes Seconds'}}
+          </p>
+        </div>
+      </div>
+
+      <!-- DD Format -->
+      <div *ngIf="gpsFormat === 'DD'" class="gps-section">
+        <div class="form-group">
+          <label class="control-label">Latitude</label>
+          <div class="input-container">
+            <input type="text" class="form-control" formControlName="ddLatitude"
+                   (blur)="validateCoordinates()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Longitude</label>
+          <div class="input-container">
+            <input type="text" class="form-control" formControlName="ddLongitude"
+                   (blur)="validateCoordinates()">
+          </div>
+        </div>
+      </div>
+
+      <!-- DM Format -->
+      <div *ngIf="gpsFormat === 'DM'" class="gps-section">
+        <div class="form-group">
+          <label class="control-label">Latitude Direction</label>
+          <div class="input-container">
+            <div class="radio-group horizontal">
+              <label>
+                <input type="radio" formControlName="dmNorthSouth" [value]="'N'"> N
+              </label>
+              <label>
+                <input type="radio" formControlName="dmNorthSouth" [value]="'S'"> S
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Latitude DM</label>
+          <div class="input-container horizontal-inputs">
+            <input type="text" class="form-control small" formControlName="dmLatitudeDegrees"
+                   placeholder="Degrees" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmLatitudeMinutes"
+                   placeholder="Minutes" (blur)="validateCoordinates()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Longitude Direction</label>
+          <div class="input-container">
+            <div class="radio-group horizontal">
+              <label>
+                <input type="radio" formControlName="dmEastWest" [value]="'E'"> E
+              </label>
+              <label>
+                <input type="radio" formControlName="dmEastWest" [value]="'W'"> W
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Longitude DM</label>
+          <div class="input-container horizontal-inputs">
+            <input type="text" class="form-control small" formControlName="dmLongitudeDegrees"
+                   placeholder="Degrees" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmLongitudeMinutes"
+                   placeholder="Minutes" (blur)="validateCoordinates()">
+          </div>
+        </div>
+      </div>
+
+      <!-- DMS Format -->
+      <div *ngIf="gpsFormat === 'DMS'" class="gps-section">
+        <div class="form-group">
+          <label class="control-label">Latitude Direction</label>
+          <div class="input-container">
+            <div class="radio-group horizontal">
+              <label>
+                <input type="radio" formControlName="dmsNorthSouth" [value]="'N'"> N
+              </label>
+              <label>
+                <input type="radio" formControlName="dmsNorthSouth" [value]="'S'"> S
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Latitude DMS</label>
+          <div class="input-container horizontal-inputs">
+            <input type="text" class="form-control small" formControlName="dmsLatitudeDegrees"
+                   placeholder="Degrees" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmsLatitudeMinutes"
+                   placeholder="Minutes" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmsLatitudeSeconds"
+                   placeholder="Seconds" (blur)="validateCoordinates()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Longitude Direction</label>
+          <div class="input-container">
+            <div class="radio-group horizontal">
+              <label>
+                <input type="radio" formControlName="dmsEastWest" [value]="'E'"> E
+              </label>
+              <label>
+                <input type="radio" formControlName="dmsEastWest" [value]="'W'"> W
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Longitude DMS</label>
+          <div class="input-container horizontal-inputs">
+            <input type="text" class="form-control small" formControlName="dmsLongitudeDegrees"
+                   placeholder="Degrees" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmsLongitudeMinutes"
+                   placeholder="Minutes" (blur)="validateCoordinates()">
+            <input type="text" class="form-control small" formControlName="dmsLongitudeSeconds"
+                   placeholder="Seconds" (blur)="validateCoordinates()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information Section -->
+    <div class="form-section">
+      <h3>Additional Information</h3>
+
+      <div class="form-group">
+        <label class="control-label">Remarks</label>
+        <div class="input-container">
+          <textarea class="form-control" formControlName="remark" rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Flag</label>
+        <div class="input-container">
+          <input type="text" class="form-control" formControlName="flag">
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div class="form-section">
+      <h3>File Upload</h3>
+
+      <div class="form-group">
+        <label class="control-label">Upload Files</label>
+        <div class="input-container">
+          <input type="file" class="form-control" multiple (change)="onFileSelected($event)">
+          <div *ngFor="let file of files.controls; let i = index" class="file-item">
+            {{ file.value.name }}
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeFile(i)">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="customerForm.invalid || isSubmitting">
+        <span *ngIf="isSubmitting" class="loading-spinner"></span>
+        {{ isSubmitting ? 'Saving...' : 'Save' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onReset()">
+        Reset
+      </button>
+      <button type="button" class="btn btn-outline" routerLink="/customers">
+        Back to List
+      </button>
+      <button type="button" class="btn btn-info" (click)="goToCommunication()">
+        Go to Communication
+      </button>
+    </div>
+
+  </form>
+</div>

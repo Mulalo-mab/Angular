@@ -1,0 +1,59 @@
+.grid-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-header {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+
+.button-section {
+  margin-bottom: 0.5rem;
+}
+
+.button-group {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+  .button-group button {
+    margin: 4px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+    .button-group button:hover {
+      background: #f0f0f0;
+    }
+
+    .button-group button:active {
+      background: #e0e0e0;
+    }
+
+/* AG Grid styling */
+ag-grid-angular {
+  flex: 1 1 0px;
+  width: 100%;
+}
+
+/* AG Grid theme customization */
+.ag-theme-alpine {
+  --ag-header-height: 40px;
+  --ag-header-background-color: #34495e;
+  --ag-header-foreground-color: white;
+  --ag-border-color: #bdc3c7;
+}
+
+  .ag-theme-alpine .ag-header-cell-text {
+    font-weight: 600;
+  }

@@ -1,0 +1,59 @@
+<div class="grid-container">
+  <div class="grid-header">
+    <h2>AG Grid Column Features Demo</h2>
+    <p>Total Records: {{rowData.length}}</p>
+
+    <div class="button-section">
+      <!-- Sorting -->
+      <div class="button-group">
+        <button (click)="onBtSortOn()">Sort On (Age↓, Athlete↑)</button>
+        <button (click)="onBtSortOff()">Sort Off</button>
+      </div>
+
+      <!-- Column Width -->
+      <div class="button-group">
+        <button (click)="onBtWidthNarrow()">Width Narrow</button>
+        <button (click)="onBtWidthNormal()">Width Normal</button>
+      </div>
+
+      <!-- Visibility -->
+      <div class="button-group">
+        <button (click)="onBtHide()">Hide Age & Athlete</button>
+        <button (click)="onBtShow()">Show All</button>
+      </div>
+
+      <!-- Pinning -->
+      <div class="button-group">
+        <button (click)="onBtPinnedOn()">Pin Athlete Left</button>
+        <button (click)="onBtPinnedOff()">Unpin All</button>
+      </div>
+
+      <!-- Data Operations -->
+      <div class="button-group">
+        <button (click)="onBtAddRow()">Add Row</button>
+        <button (click)="onBtRemoveRow()">Remove First Row</button>
+      </div>
+
+      <!-- Reset -->
+      <div class="button-group">
+        <button (click)="onBtReset()">Reset Columns</button>
+        <button (click)="onBtClearAll()">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AG Grid with Legacy Theme -->
+  <ag-grid-angular style="width: 100%; height: 500px;"
+                   class="ag-theme-alpine"
+                   [defaultColDef]="defaultColDef"
+                   [columnDefs]="columnDefs"
+                   [rowData]="rowData"
+                   [animateRows]="true"
+                   (sortChanged)="onSortChanged($event)"
+                   (columnResized)="onColumnResized($event)"
+                   (columnVisible)="onColumnVisible($event)"
+                   (columnMoved)="onColumnMoved($event)"
+                   (columnPinned)="onColumnPinned($event)"
+                   (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>

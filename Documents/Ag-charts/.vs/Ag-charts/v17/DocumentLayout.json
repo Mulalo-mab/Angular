@@ -1,0 +1,149 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\suppo\\Documents\\Ag-charts\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\ag-chart\\ag-charts\\ag-charts.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\ag-chart\\ag-charts\\ag-charts.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\app.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\app.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\app-module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-routing-module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\app-routing-module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\ag-chart\\ag-charts\\ag-charts.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ag-charts.ts",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.ts",
+              "RelativeDocumentMoniker": "src\\app\\ag-chart\\ag-charts\\ag-charts.ts",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.ts",
+              "RelativeToolTip": "src\\app\\ag-chart\\ag-charts\\ag-charts.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-29T19:43:32.803Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ag-charts.html",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.html",
+              "RelativeDocumentMoniker": "src\\app\\ag-chart\\ag-charts\\ag-charts.html",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.html",
+              "RelativeToolTip": "src\\app\\ag-chart\\ag-charts\\ag-charts.html",
+              "ViewState": "AgIAADsAAAAAAAAAAADwv04AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-10-29T19:46:38.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "app.ts",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.ts",
+              "RelativeDocumentMoniker": "src\\app\\app.ts",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.ts",
+              "RelativeToolTip": "src\\app\\app.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-29T20:42:09.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "app.html",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.html",
+              "RelativeDocumentMoniker": "src\\app\\app.html",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app.html",
+              "RelativeToolTip": "src\\app\\app.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-10-29T19:39:20.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "app-module.ts",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-module.ts",
+              "RelativeDocumentMoniker": "src\\app\\app-module.ts",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-module.ts",
+              "RelativeToolTip": "src\\app\\app-module.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-29T19:34:51.583Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "app-routing-module.ts",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-routing-module.ts",
+              "RelativeDocumentMoniker": "src\\app\\app-routing-module.ts",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\app-routing-module.ts",
+              "RelativeToolTip": "src\\app\\app-routing-module.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-29T19:36:42.718Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ag-charts.spec.ts",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts",
+              "RelativeDocumentMoniker": "src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts",
+              "RelativeToolTip": "src\\app\\ag-chart\\ag-charts\\ag-charts.spec.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-29T19:54:18.898Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ag-charts.css",
+              "DocumentMoniker": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.css",
+              "RelativeDocumentMoniker": "src\\app\\ag-chart\\ag-charts\\ag-charts.css",
+              "ToolTip": "C:\\Users\\suppo\\Documents\\Ag-charts\\src\\app\\ag-chart\\ag-charts\\ag-charts.css",
+              "RelativeToolTip": "src\\app\\ag-chart\\ag-charts\\ag-charts.css",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAUwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-29T19:46:32.498Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
