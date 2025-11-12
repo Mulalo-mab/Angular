@@ -1,0 +1,48 @@
+<div class="selection-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        <span>
+          Selection for {{ data.currentEditingRow.athlete }} - {{ data.currentEditingRow.sport }}
+        </span>
+      </h5>
+      <button type="button" class="close-btn" (click)="closeDialog()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label></label>
+        <input type="text"
+               class="form-control search-input"
+               placeholder="Type to search..."
+               #searchInput
+               (input)="onSearchFilterChange(searchInput.value)">
+      </div>
+
+
+      <div class="ag-grid-container">
+        <ag-grid-angular class="ag-theme-alpine selection-grid"
+                         [rowData]="filteredSelectionItems"
+                         [columnDefs]="data.selectionColDefs"
+                         [defaultColDef]="data.selectionDefaultColDef"
+                         [rowSelection]="'single'"
+                         (selectionChanged)="onSelectionChanged($event)"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         [suppressCellFocus]="true"
+                         theme="legacy"
+                         style="height: 300px; width: 100%;">
+        </ag-grid-angular>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeDialog()">Close</button>
+      <button type="button"
+              class="btn btn-primary"
+              (click)="confirmSelection()"
+              [disabled]="!selectedGridItem">
+        Select & Apply
+      </button>
+    </div>
+  </div>
+</div>

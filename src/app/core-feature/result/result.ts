@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ColDef, ColGroupDef, GridApi } from 'ag-grid-community';
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
-import { ResultService, SelectionItem }from './result-service';
+import { ResultService, SelectionItem } from './result-service';
+import { MatDialog } from '@angular/material/dialog';
+import { SelectionDialogComponent, SelectionDialogData } from '../result/selection-dialog-component/selection-dialog-component';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
-
-
 
 @Component({
   selector: 'app-result',
@@ -17,12 +17,8 @@ export class Result {
   private gridApi!: GridApi;
   rowData: any[] = [];
 
-  // Selection modal variables
-  showSelectionModal: boolean = false;
   searchFilter: string = '';
   selectionItems: SelectionItem[] = [];
-  filteredSelectionItems: SelectionItem[] = [];
-  selectedGridItem: SelectionItem | null = null;
   currentEditingRow: any = null;
 
   columnDefs: (ColDef | ColGroupDef)[] = [
@@ -35,8 +31,9 @@ export class Result {
     {
       field: 'athlete',
       pinned: 'left',
-      cellStyle: {'background-color': '#D3D3D3',
-    }
+      cellStyle: {
+        'background-color': '#D3D3D3',
+      }
     },
     {
       field: 'age', cellEditor: 'agNumberCellEditor',
@@ -64,8 +61,6 @@ export class Result {
         'background-color': '#D3D3D3',
       }
     },
-
-
     {
       headerName: 'Medals Results',
       suppressStickyLabel: true,
@@ -139,7 +134,10 @@ export class Result {
     resizable: true
   };
 
-  constructor(private resultService: ResultService) { }
+  constructor(
+    private resultService: ResultService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -174,11 +172,7 @@ export class Result {
   generateSelectionItemsBasedOnSport(sport: string): SelectionItem[] {
     let sportBasedItems: SelectionItem[] = [];
 
-    const generalSportItems: SelectionItem[] = [
-      { list: 'Olympic Athlete', code: 'OLYMPIC_ATHLETE', description: '' },
-      { list: 'Elite Competitor', code: 'ELITE_COMPETITOR', description: '' },
-      { list: 'International Player', code: 'INTERNATIONAL', description: '' }
-    ];
+    const generalSportItems: SelectionItem[] = [];
 
     const sportLower = sport.toLowerCase();
 
@@ -189,7 +183,7 @@ export class Result {
         { list: 'Pool Specialist', code: 'POOL_SPECIALIST', description: '' },
         { list: 'Water Endurance', code: 'WATER_ENDURANCE', description: '' },
         { list: 'Stroke Technician', code: 'STROKE_TECH', description: '' },
-        { list: 'Medley Expert', code: 'MEDLEY_EXPERT', description: '' }
+       
       );
     }
 
@@ -200,7 +194,7 @@ export class Result {
         { list: 'Speed Demon', code: 'SPEED_DEMON', description: '' },
         { list: 'Field Specialist', code: 'FIELD_SPECIALIST', description: '' },
         { list: 'Endurance Athlete', code: 'ENDURANCE', description: '' },
-        { list: 'Power Performer', code: 'POWER_PERFORMER', description: '' }
+       
       );
     }
 
@@ -211,15 +205,14 @@ export class Result {
         { list: 'Balance Specialist', code: 'BALANCE_SPEC', description: '' },
         { list: 'Flexibility Expert', code: 'FLEXIBILITY_EXP', description: '' },
         { list: 'Apparatus Master', code: 'APPARATUS_MASTER', description: '' },
-        { list: 'Rhythmic Artist', code: 'RHYTHMIC_ARTIST', description: '' }
+        
       );
     }
 
- 
     return [...sportBasedItems, ...generalSportItems];
   }
 
-  // Modal methods
+  
   openSelectionModal(generatorType: string = 'sport') {
     if (!this.currentEditingRow) {
       console.error('No row selected for editing');
@@ -228,6 +221,7 @@ export class Result {
 
     console.log(`Generating options using: ${generatorType} for athlete:`, this.currentEditingRow.athlete);
 
+    
     switch (generatorType) {
       case 'sport':
         this.selectionItems = this.generateSelectionItemsBasedOnSport(
@@ -241,55 +235,40 @@ export class Result {
         break;
     }
 
-    this.filteredSelectionItems = [...this.selectionItems];
-    this.showSelectionModal = true;
-    this.searchFilter = '';
-    this.selectedGridItem = null;
+    
+    const dialogRef = this.dialog.open(SelectionDialogComponent, {
+      height: '400px',
+      width: '600px',
+      data: {
+        currentEditingRow: this.currentEditingRow,
+        selectionItems: this.selectionItems,
+        selectionColDefs: this.selectionColDefs,
+        selectionDefaultColDef: this.selectionDefaultColDef
+      } as SelectionDialogData
+    });
+
+    dialogRef.afterClosed().subscribe((result: SelectionItem | undefined) => {
+      if (result) {
+        this.confirmSelection(result);
+      }
+      this.currentEditingRow = null;
+    });
   }
 
-  closeSelectionModal() {
-    this.showSelectionModal = false;
-    this.selectedGridItem = null;
-    this.currentEditingRow = null;
-  }
+  
+  confirmSelection(selectedItem: SelectionItem) {
+    if (this.currentEditingRow) {
+      console.log('Selected item:', selectedItem);
 
-  onSearchFilterChange(filterValue: string) {
-    console.log('Filtering:', filterValue);
-    if (!filterValue.trim()) {
-      this.filteredSelectionItems = [...this.selectionItems];
-    } else {
-      const filterLower = filterValue.toLowerCase().trim();
-      this.filteredSelectionItems = this.selectionItems.filter(item =>
-        item.list.toLowerCase().includes(filterLower) ||
-        item.code.toLowerCase().includes(filterLower) ||
-        item.description.toLowerCase().includes(filterLower)
-      );
-    }
-  }
-
-  onSelectionChanged(event: any) {
-    const selectedRows = event.api.getSelectedRows();
-    this.selectedGridItem = selectedRows.length > 0 ? selectedRows[0] : null;
-  }
-
-  onRowDoubleClicked(event: any) {
-    this.selectedGridItem = event.data;
-    this.confirmSelection();
-  }
-
-  confirmSelection() {
-    if (this.selectedGridItem && this.currentEditingRow) {
-      console.log('Selected item:', this.selectedGridItem);
-
-      const selectedStatus = this.selectedGridItem.code;
+      const selectedStatus = selectedItem.code;
       const athleteName = this.currentEditingRow.athlete;
 
-      // UPDATE THE GRID DATA
+      
       const updatedRowData = this.rowData.map(row => {
         if (row === this.currentEditingRow) {
           return {
             ...row,
-            status: selectedStatus  // Add status field to the row
+            status: selectedStatus
           };
         }
         return row;
@@ -297,14 +276,14 @@ export class Result {
 
       this.rowData = updatedRowData;
 
-      // Also update the grid if it's ready
+     
       if (this.gridApi) {
         this.gridApi.setGridOption('rowData', this.rowData);
       }
 
-      alert(`Athlete: ${athleteName}\nStatus updated to: ${selectedStatus}\n\n${this.selectedGridItem.description}`);
-
-      this.closeSelectionModal();
+      alert(`Athlete: ${athleteName}\nStatus updated to: ${selectedStatus}\n\n${selectedItem.description}`);
     }
   }
+
+  
 }

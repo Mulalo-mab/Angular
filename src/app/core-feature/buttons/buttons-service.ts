@@ -140,32 +140,10 @@ export class ButtonsService {
 
 
     const generalItems: SelectionItem[] = [
-      { list: 'Perfect Age', code: 'Perfect Age', description: 'Age is between 20-25 years' },
-      { list: 'Good Age', code: 'Good Age', description: 'Age is between 25-30 years' },
-      { list: 'Too Old', code: 'Too Old', description: 'Age is above 30 years' }
+      { list: 'Prime Learning Years', code: 'Prime Learning Years', description: 'Age is between 20-25 years' },
+      { list: 'Experience Building', code: 'Ecperince Building', description: 'Age is between 25-30 years' },
+      { list: 'Senior Level', code: 'Senior Level', description: 'Age is above 30 years' }
     ];
-
-    if (userAge >= 20 && userAge <= 25) {
-      ageBasedItems.push(
-        { list: 'Young & Energetic', code: 'Young & Energetic', description: 'Great time for career building' },
-        { list: 'Prime Learning Years', code: 'Prime Learning Years', description: 'Ideal for skill development' }
-      );
-    } else if (userAge > 25 && userAge <= 30) {
-      ageBasedItems.push(
-        { list: 'Career Growth Phase', code: 'Career Growth Phase', description: 'Time for professional advancement' },
-        { list: 'Experience Building', code: 'Experience Building', description: 'Gaining valuable experience' }
-      );
-    } else if (userAge > 30) {
-      ageBasedItems.push(
-        { list: 'Senior Level', code: 'Senior Level', description: 'Time for leadership roles' },
-        { list: 'Mature & Experienced', code: 'Mature & Experienced', description: 'Valuable experience gained' }
-      );
-    } else {
-      ageBasedItems.push(
-        { list: 'Too Young', code: 'Too Young', description: 'Age is below 20 years' },
-        { list: 'Early Stage', code: 'Early Stage', description: 'Still in development phase' }
-      );
-    }
 
     return [...ageBasedItems, ...generalItems];
   }

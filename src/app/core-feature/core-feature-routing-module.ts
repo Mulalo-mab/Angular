@@ -12,6 +12,10 @@ import { UpdateRow } from './update-row/update-row';
 import { Buttons } from './buttons/buttons';
 import { ButtonsForm } from './buttons/buttons-form/buttons-form';
 import { Result } from './result/result';
+import { TreeNode } from './tree-node/tree-node';
+import { FlatTree } from './flat-tree/flat-tree';
+
+
 
 const routes: Routes = [
   {
@@ -29,7 +33,9 @@ const routes: Routes = [
       { path: 'button', component: Buttons },
       { path: 'button/create', component: ButtonsForm },
       { path: 'button/edit/:id', component: ButtonsForm },
-      { path: 'result', component: Result},
+      { path: 'result', component: Result },
+      { path: 'tree', component: TreeNode },
+      { path: 'flat', component: FlatTree },
     ]
   }
 ];

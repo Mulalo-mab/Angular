@@ -18,7 +18,13 @@ import { UpdateRow } from './update-row/update-row';
 import { Buttons } from './buttons/buttons';
 import { ButtonsForm } from './buttons/buttons-form/buttons-form';
 import { Result } from './result/result';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { SelectionDialogComponent } from './result/selection-dialog-component/selection-dialog-component';
+import { TreeNode } from './tree-node/tree-node';
+import { FlatTree } from './flat-tree/flat-tree';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,10 @@ import { Result } from './result/result';
     UpdateRow,
     Buttons,
     ButtonsForm,
-    Result
+    Result,
+    SelectionDialogComponent,
+    TreeNode,
+    FlatTree
   ],
   imports: [
     CommonModule,
@@ -41,6 +50,10 @@ import { Result } from './result/result';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
     CoreFeatureRoutingModule
   ]
 })
