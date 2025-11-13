@@ -237,8 +237,7 @@ export class Result {
 
     
     const dialogRef = this.dialog.open(SelectionDialogComponent, {
-      height: '400px',
-      width: '600px',
+     
       data: {
         currentEditingRow: this.currentEditingRow,
         selectionItems: this.selectionItems,

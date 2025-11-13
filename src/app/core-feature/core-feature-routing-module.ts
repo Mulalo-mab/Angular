@@ -14,6 +14,7 @@ import { ButtonsForm } from './buttons/buttons-form/buttons-form';
 import { Result } from './result/result';
 import { TreeNode } from './tree-node/tree-node';
 import { FlatTree } from './flat-tree/flat-tree';
+import { NestedTree } from './nested-tree/nested-tree';
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
       { path: 'result', component: Result },
       { path: 'tree', component: TreeNode },
       { path: 'flat', component: FlatTree },
+      { path: 'nested', component: NestedTree },
     ]
   }
 ];

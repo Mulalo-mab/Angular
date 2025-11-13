@@ -1,18 +1,7 @@
 <div class="tree-container">
   <div class="controls">
     <h3>Company Department Structure</h3>
-    <button mat-raised-button (click)="expandAll()" style="margin-right: 10px;">
-      <mat-icon>unfold_more</mat-icon>
-      Expand All
-    </button>
-    <button mat-raised-button (click)="collapseAll()" style="margin-right: 10px;">
-      <mat-icon>unfold_less</mat-icon>
-      Collapse All
-    </button>
-    <button mat-raised-button (click)="explainStructure()">
-      <mat-icon>info</mat-icon>
-      Explain Structure
-    </button>
+    
   </div>
 
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="company-tree">

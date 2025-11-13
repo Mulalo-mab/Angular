@@ -1,16 +1,21 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="nested-tree">
+
+  <!-- Leaf node -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <button mat-icon-button disabled></button>
     {{node.GroupName}}
   </mat-tree-node>
- 
+
+  <!-- Expandable node -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.GroupName">
+    <button mat-icon-button
+            [attr.aria-label]="'toggle ' + node.GroupName"
+            matTreeNodeToggle>
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
     {{node.GroupName}}
   </mat-tree-node>
+
 </mat-tree>

@@ -3,14 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\ag-grid\\ag-table",
     "\\src\\app\\core-feature",
-    "\\src\\app\\core-feature\\buttons",
-    "\\src\\app\\core-feature\\buttons\\buttons-form",
-    "\\src\\app\\post\\post-component",
-    "\\src\\app\\post\\post-component\\post-form",
-    "\\src\\assets",
+    "\\src\\app\\core-feature\\flat-tree",
+    "\\src\\app\\core-feature\\result\\selection-dialog-component",
+    "\\src\\app\\core-feature\\tree-node",
+    "\\src\\app\\create\\create-form",
     "\\src\\assets\\data"
   ],
-  "SelectedNode": "\\src\\app\\core-feature\\buttons\\buttons-form\\buttons-form.html",
+  "SelectedNode": "\\src\\app\\core-feature\\flat-tree\\flat-tree.html",
   "PreviewInSolutionExplorer": false
 }

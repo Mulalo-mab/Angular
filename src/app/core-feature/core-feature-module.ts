@@ -25,6 +25,7 @@ import { FlatTree } from './flat-tree/flat-tree';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NestedTree } from './nested-tree/nested-tree';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatButtonModule } from '@angular/material/button';
     Result,
     SelectionDialogComponent,
     TreeNode,
-    FlatTree
+    FlatTree,
+    NestedTree
   ],
   imports: [
     CommonModule,

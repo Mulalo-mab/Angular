@@ -1,18 +1,8 @@
-import { Component } from '@angular/core';
-import { ColDef, ColGroupDef, GridApi } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+import { Component, OnInit } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { TreeNodeService, TreeNodeData, FlatNode } from './tree-node-service';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
-
-interface TreeNodeData {
-  ShortDesc: string;
-  GroupCode: string;
-  GroupName: string;
-  ID: number;
-  ParentId: number | null;
-  sequence: string;
-}
 
 
 @Component({
@@ -21,82 +11,61 @@ interface TreeNodeData {
   templateUrl: './tree-node.html',
   styleUrl: './tree-node.css'
 })
-export class TreeNode {
-  private gridApi!: GridApi;
+export class TreeNode implements OnInit {
+  
+  treeData: TreeNodeData[] = [];
 
-
-  rowData: TreeNodeData[] = [
-    { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: 1049, sequence: "" },
-    { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-    { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-    { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-    { ShortDesc: 'Arsenic (As) (SGS Vietnam)', GroupCode: 'Arsenic (As) (SGS Vietnam)', GroupName: 'Arsenic (As) (SGS Vietnam)', ID: 1362, ParentId: 639, sequence: "" },
-    { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: 1049, sequence: "" },
-    { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-    { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-    { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-    { ShortDesc: '(CEN) Salmonella spp. (RAPID Short Protocol)', GroupCode: '(CEN) Salmonella spp. (RAPID Short Protocol)', GroupName: '(CEN) Salmonella spp. (RAPID Short Protocol)', ID: 1173, ParentId: null, sequence: "" },
-    { ShortDesc: 'Acidity (Fixed) in Wine', GroupCode: 'Acidity (Fixed) in Wine (Calculated ex Total & Volatile Acidity)', GroupName: 'Acidity (Fixed) in Wine (Calculated ex Total & Volatile Acidity)', ID: 173, ParentId: 1049, sequence: "" },
-    { ShortDesc: 'Cd (ICP-MS)', GroupCode: 'Cadmium (Cd) (ICP-MS)', GroupName: 'Cadmium (Cd) (ICP-MS)', ID: 333, ParentId: 651, sequence: "" },
-    { ShortDesc: 'Cd (ICP-MS)', GroupCode: 'Cadmium (Cd) (ICP-MS)', GroupName: 'Cadmium (Cd) (ICP-MS)', ID: 333, ParentId: 1025, sequence: "" },
-
-
-    // data
-   // {
-   //   ParentId: 1049,
-   //   children: [
-   //     { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-   //     { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-   //     { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-   //     { ShortDesc: 'As (ICP-MS)', GroupCode: 'Arsenic (As) (ICP-MS)', GroupName: 'Arsenic (As) (ICP-MS)', ID: 332, ParentId: null, sequence: "" },
-   //   ],
-   // },
-   // {
-//ParentId: 639,
-   //   children: [
-    //    { ShortDesc: 'Arsenic (As) (SGS Vietnam)', GroupCode: 'Arsenic (As) (SGS Vietnam)', GroupName: 'Arsenic (As) (SGS Vietnam)', ID: 1362, ParentId: null, sequence: "" },
-    //  ],
-   // },
-   // {
-   //   ParentId: 1049,
-   //   children: [
-   //     { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-   //     { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-   //    { ShortDesc: 'Ash (Fishmeal)', GroupCode: 'Ash (Fishmeal)', GroupName: 'Ash (Fishmeal)', ID: 16, ParentId: null, sequence: "" },
-   //   ]
-  //  }
-  ];
-
-
-  columnDefs: (ColDef | ColGroupDef)[] = [
-    { field: 'ShortDesc', headerName: 'Short Description' },
-    { field: 'GroupCode', headerName: 'Group Code' },
-    { field: 'GroupName', headerName: 'Group Name' },
-    { field: 'ID', headerName: 'ID' },
-    { field: 'ParentId', headerName: 'Parent ID' },
-    { field: 'sequence', headerName: 'Sequence' }
-  ];
-
-  defaultColDef: ColDef = {
-    flex: 1,
-  }
-
-
-  gridOptions = {
-    theme: 'legacy' as any,
-    onGridReady: (params: any) => this.onGridReady(params),
-    groupHeaderHeight: undefined,
-    headerHeight: undefined,
-    floatingFiltersHeight: undefined
+  private _transformer = (node: TreeNodeData, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      GroupName: node.GroupName,
+      level: level,
+    };
   };
 
-  onGridReady(params: any): void {
-    this.gridApi = params.api;
-    console.log('Grid ready, current rowData length:', this.rowData.length);
+  treeControl = new FlatTreeControl<FlatNode>(
+    node => node.level,
+    node => node.expandable
+  );
 
-    if (this.rowData && this.rowData.length > 0) {
-      this.gridApi.setGridOption('rowData', this.rowData);
-    }
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+
+  constructor(private treeNodeService: TreeNodeService) {
+  }
+
+  ngOnInit(): void {
+    this.loadTreeData();
+  }
+
+  hasChild = (_: number, node: FlatNode) => node.expandable;
+
+  private loadTreeData(): void {
+    this.treeNodeService.getTreeDataWithHierarchy().subscribe({
+      next: (treeData) => {
+        this.treeData = treeData;
+        this.dataSource.data = this.treeData;
+        console.log('Tree data loaded from json:', this.treeData);
+      },
+      error: (error) => {
+        console.error('Error loading tree data:', error);
+      }
+    });
+  }
+
+  expandAll(): void {
+    this.treeControl.expandAll();
+  }
+
+  collapseAll(): void {
+    this.treeControl.collapseAll();
   }
 
 }
