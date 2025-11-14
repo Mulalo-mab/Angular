@@ -25,6 +25,7 @@ import { FlatTree } from './flat-tree/flat-tree';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NestedTree } from './nested-tree/nested-tree';
 
 @NgModule({
@@ -53,6 +54,7 @@ import { NestedTree } from './nested-tree/nested-tree';
     ReactiveFormsModule,
     FormsModule,
     MatTreeModule,
+    MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,

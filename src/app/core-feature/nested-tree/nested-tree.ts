@@ -1,7 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { NestedTreeService, TreeNodeData } from './nested-tree-service';
+
+
+interface FoodNode {
+  name: string;
+  checked?: boolean
+  children?: FoodNode[];
+}
+
+const TREE_DATA: FoodNode[] = [
+  {
+    name: 'Fuit',
+    children: [
+      { name: 'Apple' },
+      { name: 'Banana' },
+      {name: 'Fruit loops'},
+    ]
+  }, {
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          { name: 'Broccoli' },
+          {name: 'Brussel spouts'},
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          { name: 'Pumpkins' },
+          {name: 'Carrots'},
+        ]
+      },
+    ]
+  },
+]
+
 
 @Component({
   selector: 'app-nested-tree',
@@ -10,33 +45,103 @@ import { NestedTreeService, TreeNodeData } from './nested-tree-service';
   styleUrl: './nested-tree.css'
 })
 export class NestedTree implements OnInit {
-  treeControl = new NestedTreeControl<TreeNodeData>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<TreeNodeData>();
+  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<FoodNode>();
 
-  constructor(private nestedTreeService: NestedTreeService) { }
+  constructor() {
+    this.initializeCheckedProperties(TREE_DATA); this.dataSource.data = TREE_DATA;
+    this.dataSource.data = TREE_DATA;
+  }
+
+  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
 
   ngOnInit(): void {
-    this.loadTreeData();
+    this.treeControl.dataNodes = TREE_DATA;
+    this.treeControl.expandAll();
   }
 
-  hasChild = (_: number, node: TreeNodeData) =>
-    !!node.children && node.children.length > 0;
-
-  private loadTreeData(): void {
-    this.nestedTreeService.getNestedTreeData().subscribe({
-      next: (treeData) => {
-        this.dataSource.data = treeData;
-        console.log('Nested tree data loaded:', treeData);
-
-        this.treeControl.dataNodes = treeData;
-        this.treeControl.expandAll();
-      },
-      error: (error) => {
-        console.error('Error loading tree data:', error);
+  private initializeCheckedProperties(node:FoodNode[]): void {
+    node.forEach(node => {
+      node.checked = node.checked || false;
+      if (node.children) {
+        this.initializeCheckedProperties(node.children);
       }
-
     });
   }
+
+  // check if all descandants are selected
+  descendantsAllSelected(node: FoodNode): boolean {
+    if (!node.children) {
+      return node.checked || false;
+    }
+
+    return node.children.length > 0 &&
+      node.children.every(child => this.descendantsAllSelected(child));
+  }
+
+  descendantsPartiallySelected(node: FoodNode): boolean {
+    if (!node.children) {
+      return false;
+    }
+
+    const someSelected = node.children.some(child =>
+      this.descendantsAllSelected(child) || this.descendantsPartiallySelected(child)
+    );
+    const allSelected = node.children.every(child => this.descendantsAllSelected(child));
+    return someSelected && !allSelected;
+  }
+
+
+  itemSelectionToggle(node: FoodNode): void {
+    node.checked = !node.checked;
+    this.toggleDescendants(node, node.checked);
+  }
+
+  private toggleDescendants(node: FoodNode, checked: boolean): void {
+    if (node.children) {
+      node.children.forEach(child => {
+        child.checked = checked;
+        this.toggleDescendants(child, checked);
+      });
+    }
+  }
+
+  getSelectedNodes(): FoodNode[] {
+    const selected: FoodNode[] = [];
+    this.findSelectedNodes(this.dataSource.data, selected);
+    return selected;
+  }
+
+  private findSelectedNodes(node: FoodNode[], selected: FoodNode[]): void {
+    node.forEach(node => {
+      if (node.checked) {
+        selected.push(node);
+      }
+      if (node.children) {
+        this.findSelectedNodes(node.children, selected);
+      }
+    });
+  }
+
+  // select all nodes
+  selectAll(): void {
+    this.toggleAll(this.dataSource.data, true);
+  }
+
+  deselectAll(): void {
+    this.toggleAll(this.dataSource.data, false);
+  }
+
+  private toggleAll(node: FoodNode[], checked: boolean): void {
+    node.forEach(node => {
+    node.checked = checked;
+    if (node.children) {
+      this.toggleAll(node.children, checked);
+    }
+  });
+  }
+
+
 
   expandAll(): void {
     this.treeControl.expandAll();
@@ -45,29 +150,5 @@ export class NestedTree implements OnInit {
   collapseAll(): void {
     this.treeControl.collapseAll();
   }
-
-
-  getParentNodes(): TreeNodeData[] {
-    return this.dataSource.data.filter(node => node.ParentId === null);
-  }
-
-  // Get children of a specific node
-  getChildren(parentId: number): TreeNodeData[] {
-    const findChildren = (nodes: TreeNodeData[]): TreeNodeData[] => {
-      let children: TreeNodeData[] = [];
-      nodes.forEach(node => {
-        if (node.ID === parentId && node.children) {
-          children = node.children;
-        } else if (node.children) {
-          children = children.concat(findChildren(node.children));
-        }
-      });
-      return children;
-    };
-
-    return findChildren(this.dataSource.data);
-  }
-
-
 
 }

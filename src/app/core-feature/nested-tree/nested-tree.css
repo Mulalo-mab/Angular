@@ -1,0 +1,22 @@
+.tree-invisible {
+    display: none;
+}
+
+.mat-tree-node {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 24px;
+}
+
+mat-tree li {
+  list-style-type: none !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

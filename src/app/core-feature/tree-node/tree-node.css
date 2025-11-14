@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+}
+
+.tree-section {
+  flex: 1; 
+  max-width: 50%; 
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
+  overflow-y: auto; 
+}
+
+.grid-section {
+  flex: 1; 
+  max-width: 50%; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.tree-actions {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.checklist-node, .checklist-leaf-node {
+  margin-left: 8px;
+}
+
+mat-tree {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+
+ag-grid-angular {
+  flex: 1;
+  min-height: 0; 
+}
