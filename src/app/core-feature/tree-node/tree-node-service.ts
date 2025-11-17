@@ -18,6 +18,7 @@ export interface FlatNode {
   level: number;
   checked?: boolean;
   ID: number;
+
 }
 
 
@@ -39,14 +40,14 @@ export class TreeNodeService {
     );
   }
 
- 
+
   getChildrenByParentId(parentId: number): Observable<TreeNodeData[]> {
     return this.getTreeData().pipe(
       map(flatData => flatData.filter(item => item.ParentId === parentId))
     );
   }
 
- 
+
   convertToTreeStructure(flatData: TreeNodeData[]): TreeNodeData[] {
     const dataMap = new Map<number, TreeNodeData>();
 
@@ -78,6 +79,6 @@ export class TreeNodeService {
   }
 
 
- 
+
 
 }

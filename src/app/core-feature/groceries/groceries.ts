@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { TreeNodeService, TreeNodeData, FlatNode } from './tree-node-service';
-import { ColDef, GridReadyEvent, RowSelectionOptions } from 'ag-grid-community';
+import { GroceriesService, TreeNodeData, FlatNode } from './groceries-service';
+import { ColDef, GridReadyEvent } from 'ag-grid-community';
 
 interface ChecklistNode extends TreeNodeData {
   checked?: boolean;
@@ -14,16 +14,15 @@ interface ChecklistFlatNode extends FlatNode {
 }
 
 @Component({
-  selector: 'app-tree-node',
+  selector: 'app-groceries',
   standalone: false,
-  templateUrl: './tree-node.html',
-  styleUrl: './tree-node.css'
+  templateUrl: './groceries.html',
+  styleUrl: './groceries.css'
 })
-export class TreeNode implements OnInit {
+export class Groceries {
 
   treeData: ChecklistNode[] = [];
 
-  // ag-grid properties
   rowData: any[] = [];
   columnDefs: ColDef[] = [
     { field: 'GroupName', headerName: 'Group Name', rowDrag: true },
@@ -44,9 +43,7 @@ export class TreeNode implements OnInit {
     resizable: true,
   };
 
-  rowSelection: RowSelectionOptions | "single" | "multiple" = {
-    mode: "multiRow",
-  };
+  rowSelection: "single" | "multiple" = "multiple";
 
   gridApi: any;
 
@@ -74,22 +71,20 @@ export class TreeNode implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private treeNodeService: TreeNodeService) { }
+  constructor(private groceriesService: GroceriesService) { }
 
   ngOnInit(): void {
     this.loadTreeData();
   }
 
-
-
   hasChild = (_: number, node: ChecklistFlatNode) => node.expandable;
 
   private loadTreeData(): void {
-    this.treeNodeService.getTreeDataWithHierarchy().subscribe({
+    this.groceriesService.getTreeDataWithHierarchy().subscribe({
       next: (treeData) => {
         this.treeData = this.initializeCheckedProperties(treeData);
         this.dataSource.data = this.treeData;
-        console.log('Tree data loaded from json:', this.treeData);
+        console.log('Tree data loaded from service:', this.treeData);
       },
       error: (error) => {
         console.error('Error loading tree data:', error);
@@ -97,16 +92,15 @@ export class TreeNode implements OnInit {
     });
   }
 
-  private initializeCheckedProperties(node: TreeNodeData[]): ChecklistNode[] {
-    return node.map(node => ({
+  private initializeCheckedProperties(nodes: TreeNodeData[]): ChecklistNode[] {
+    return nodes.map(node => ({
       ...node,
       checked: false,
       children: node.children ? this.initializeCheckedProperties(node.children) : undefined
     }));
   }
 
-  // selecting all the nodes
-  descandantsAllSelected(node: ChecklistFlatNode): boolean {
+  descendantsAllSelected(node: ChecklistFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.length > 0 && descendants.every(child => {
       return child.checked;
@@ -114,14 +108,12 @@ export class TreeNode implements OnInit {
     return descAllSelected;
   }
 
-  // Check if some descendants are selected
   descendantsPartiallySelected(node: ChecklistFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(child => child.checked);
-    return result && !this.descandantsAllSelected(node);
+    return result && !this.descendantsAllSelected(node);
   }
 
-  // Toggle item selection
   itemSelectionToggle(node: ChecklistFlatNode): void {
     node.checked = !node.checked;
     this.toggleDescendants(node, node.checked);
@@ -129,7 +121,6 @@ export class TreeNode implements OnInit {
     this.updateGridData();
   }
 
-  // Toggle all descendants
   private toggleDescendants(node: ChecklistFlatNode, checked: boolean): void {
     const descendants = this.treeControl.getDescendants(node);
     descendants.forEach(child => {
@@ -137,16 +128,14 @@ export class TreeNode implements OnInit {
     });
   }
 
-  // Check all parent nodes
   private checkAllParents(node: ChecklistFlatNode): void {
     let parent: ChecklistFlatNode | null = this.getParentNode(node);
     while (parent) {
-      parent.checked = this.descandantsAllSelected(parent);
+      parent.checked = this.descendantsAllSelected(parent);
       parent = this.getParentNode(parent);
     }
   }
 
-  // Get parent node
   private getParentNode(node: ChecklistFlatNode): ChecklistFlatNode | null {
     const currentLevel = node.level;
     if (currentLevel < 1) {
@@ -164,12 +153,9 @@ export class TreeNode implements OnInit {
     return null;
   }
 
-  // Get all selected nodes
   getSelectedNodes(): ChecklistFlatNode[] {
     return this.treeControl.dataNodes.filter(node => node.checked);
   }
-
-
 
   private updateGridData(): void {
     const selectedNodes = this.getSelectedNodes();
@@ -179,15 +165,13 @@ export class TreeNode implements OnInit {
       level: node.level
     }));
 
-    // Refresh grid if API is available
     if (this.gridApi) {
-      this.gridApi.setRowData(this.rowData);
+      this.gridApi.setGridOption('rowData', this.rowData);
     }
   }
 
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
-    // Auto-size columns to fit the grid width
     setTimeout(() => {
       params.api.sizeColumnsToFit();
     });

@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NestedTree } from './nested-tree/nested-tree';
+import { Groceries } from './groceries/groceries';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NestedTree } from './nested-tree/nested-tree';
     SelectionDialogComponent,
     TreeNode,
     FlatTree,
-    NestedTree
+    NestedTree,
+    Groceries
   ],
   imports: [
     CommonModule,

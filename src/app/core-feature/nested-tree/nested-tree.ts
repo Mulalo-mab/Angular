@@ -30,7 +30,12 @@ const TREE_DATA: FoodNode[] = [
         name: 'Orange',
         children: [
           { name: 'Pumpkins' },
-          {name: 'Carrots'},
+          {
+            name: 'Carrots',
+            children: [
+              {name: 'Mulalo'}
+            ]
+          },
         ]
       },
     ]

@@ -15,6 +15,7 @@ import { Result } from './result/result';
 import { TreeNode } from './tree-node/tree-node';
 import { FlatTree } from './flat-tree/flat-tree';
 import { NestedTree } from './nested-tree/nested-tree';
+import { Groceries } from './groceries/groceries';
 
 
 
@@ -38,6 +39,7 @@ const routes: Routes = [
       { path: 'tree', component: TreeNode },
       { path: 'flat', component: FlatTree },
       { path: 'nested', component: NestedTree },
+      { path: 'groceries', component: Groceries },
     ]
   }
 ];
