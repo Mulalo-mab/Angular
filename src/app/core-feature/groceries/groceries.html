@@ -1,44 +1,60 @@
-<div class="container">
+<div class="groceries-container">
   <div class="tree-section">
-    <div class="tree-controls">
-      <button mat-raised-button (click)="expandAll()">Expand All</button>
-      <button mat-raised-button (click)="collapseAll()">Collapse All</button>
-    </div>
+    <h2>Grocery Categories</h2>
 
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-        <button mat-icon-button disabled></button>
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="groceries-tree">
+      <!-- Leaf Node Template -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
         <mat-checkbox class="checklist-leaf-node"
-                      [checked]="node.checked"
-                      (change)="itemSelectionToggle(node)">{{node.GroupName}}</mat-checkbox>
+                      [checked]="checklistSelection.isSelected(node)"
+                      (change)="itemSelectionToggle(node)">
+          {{node.GroupName}}
+        </mat-checkbox>
+       
       </mat-tree-node>
 
+      <!-- Parent Node Template -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-        <button mat-icon-button matTreeNodeToggle
+        <button mat-icon-button
+                matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.GroupName">
           <mat-icon class="mat-icon-rtl-mirror">
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        <mat-checkbox [checked]="descendantsAllSelected(node)"
+
+        <mat-checkbox class="checklist-parent-node"
+                      [checked]="checklistSelection.isSelected(node)"
                       [indeterminate]="descendantsPartiallySelected(node)"
-                      (change)="itemSelectionToggle(node)">{{node.GroupName}}</mat-checkbox>
+                      (change)="itemSelectionToggle(node)">
+          {{node.GroupName}}
+        </mat-checkbox>
+       
       </mat-tree-node>
     </mat-tree>
+
+    <div class="selection-info">
+      <p>Selected: {{checklistSelection.selected.length}} items</p>
+    </div>
   </div>
 
   <div class="grid-section">
-    <h3>Selected Items</h3>
-    <ag-grid-angular style="width: 100%; height: 400px;"
-                     class="ag-theme-alpine"
-                     [rowData]="rowData"
-                     [columnDefs]="columnDefs"
-                     [defaultColDef]="defaultColDef"
-                     [rowSelection]="rowSelection"
-                     [rowDragManaged]="true"
-                     [animateRows]="true"
-                     (gridReady)="onGridReady($event)"
-                     theme="legacy">
-    </ag-grid-angular>
+    <h2>Selected Items</h2>
+    <div class="ag-theme-alpine grid-container">
+      <ag-grid-angular #agGrid
+                       class="ag-grid-custom"
+                       [rowData]="rowData"
+                       [columnDefs]="columnDefs"
+                       [defaultColDef]="defaultColDef"
+                       [rowSelection]="rowSelection"
+                       [animateRows]="true"
+                       theme="legacy"
+                       (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
   </div>
 </div>

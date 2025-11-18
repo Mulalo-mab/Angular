@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 export interface TreeNodeData {
   ID: number;
   GroupName: string;
+  ParentID: number;
   children?: TreeNodeData[];
 }
 
@@ -19,76 +20,30 @@ export interface FlatNode {
 })
 export class GroceriesService {
 
-  private mockTreeData: TreeNodeData[] = [
-    {
-      ID: 1,
-      GroupName: 'Groceries',
-      children: [
-        {
-          ID: 2,
-          GroupName: 'Almond Meal flour',
-        },
-        {
-          ID: 3,
-          GroupName: 'Organic eggs',
-        },
-        {
-          ID: 4,
-          GroupName: 'Protein Powder',
-        },
-        {
-          ID: 5,
-          GroupName: 'Fruits',
-          children: [
-            {
-              ID: 6,
-              GroupName: 'Apple',
-            },
-            {
-              ID: 7,
-              GroupName: 'Berries',
-              children: [
-                {
-                  ID: 8,
-                  GroupName: 'Blueberry',
-                },
-                {
-                  ID: 9,
-                  GroupName: 'Raspberry',
-                },
-              ],
-            },
-            {
-              ID: 10,
-              GroupName: 'Orange',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      ID: 11,
-      GroupName: 'Reminders',
-      children: [
-        {
-          ID: 12,
-          GroupName: 'Cook dinner',
-        },
-        {
-          ID: 13,
-          GroupName: 'Read the Material Design spec',
-        },
-        {
-          ID: 14,
-          GroupName: 'Upgrade Application to Angular',
-        },
-      ],
-    },
+  private treeData: TreeNodeData[] = [
+    { ID: 1, GroupName: 'Fruits', ParentID: 0 },
+    { ID: 2, GroupName: 'Apple', ParentID: 1 },
+    { ID: 3, GroupName: 'Banana', ParentID: 1 },
+    { ID: 4, GroupName: 'Fuji', ParentID: 2 },
+    { ID: 5, GroupName: 'Macintosh', ParentID: 2 },
+    { ID: 6, GroupName: 'Yellow', ParentID: 3 },
+    { ID: 7, GroupName: 'Green', ParentID: 3 },
+    { ID: 8, GroupName: 'Vegetables', ParentID: 0 },
+    { ID: 9, GroupName: 'Orange', ParentID: 8 },
+    { ID: 10, GroupName: 'Green', ParentID: 8 },
+    { ID: 11, GroupName: 'Meat', ParentID: 0 },
+    { ID: 12, GroupName: 'Pork', ParentID: 11 },
+    { ID: 13, GroupName: 'Beef', ParentID: 11 },
+    { ID: 14, GroupName: 'Chicken', ParentID: 11 },
+    { ID: 15, GroupName: 'Baking', ParentID: 0 },
+    { ID: 16, GroupName: 'Flours', ParentID: 15 },
+    { ID: 17, GroupName: 'Almond Flour', ParentID: 16 },
+    { ID: 18, GroupName: 'Coconut Flour', ParentID: 16 }
   ];
 
   constructor() { }
 
-  getTreeDataWithHierarchy(): Observable<TreeNodeData[]> {
-    return of(this.mockTreeData);
+  getTreeData(): Observable<TreeNodeData[]> {
+    return of(this.treeData);
   }
 }

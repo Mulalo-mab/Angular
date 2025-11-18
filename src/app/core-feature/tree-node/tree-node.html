@@ -1,17 +1,20 @@
 <div class="container">
   <div class="tree-section">
+    
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <!-- Leaf Node Template -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
         <button mat-icon-button disabled></button>
 
         <mat-checkbox class="checklist-leaf-node"
-                      [checked]="node.checked"
+                      [checked]="checklistSelection.isSelected(node)"
                       (change)="itemSelectionToggle(node)">
           {{node.GroupName}}
         </mat-checkbox>
       </mat-tree-node>
 
+      <!-- Parent Node Template -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
         <button mat-icon-button matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.GroupName">
@@ -20,26 +23,30 @@
           </mat-icon>
         </button>
 
-        <mat-checkbox class="checklist-node"
-                      [checked]="descandantsAllSelected(node)"
+        <mat-checkbox class="checklist-parent-node"
+                      [checked]="checklistSelection.isSelected(node)"
                       [indeterminate]="descendantsPartiallySelected(node)"
                       (change)="itemSelectionToggle(node)">
           {{node.GroupName}}
         </mat-checkbox>
       </mat-tree-node>
     </mat-tree>
+
+    <div class="selection-info">
+      <p>Selected: {{checklistSelection.selected.length}} items</p>
+    </div>
   </div>
 
   <div class="grid-section">
     <h3>Selected Items ({{rowData.length}})</h3>
-    <ag-grid-angular style="width: 80%; height: 400px; "
+    <ag-grid-angular style="width: 80%; height: 400px;"
                      class="ag-theme-alpine"
                      [rowData]="rowData"
                      [columnDefs]="columnDefs"
                      [rowSelection]="rowSelection"
                      [defaultColDef]="defaultColDef"
-                     (gridReady)="onGridReady($event)"
-                     theme="legacy">
+                     theme="legacy"
+                     (gridReady)="onGridReady($event)">
     </ag-grid-angular>
   </div>
 </div>

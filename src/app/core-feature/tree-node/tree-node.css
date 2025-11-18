@@ -6,19 +6,19 @@
 }
 
 .tree-section {
-  flex: 1; 
-  max-width: 50%; 
+  flex: 1;
+  max-width: 50%;
   border-right: 1px solid #ccc;
   padding-right: 20px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .grid-section {
-  flex: 1; 
-  max-width: 50%; 
+  flex: 1;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .tree-actions {
@@ -40,5 +40,5 @@ mat-tree {
 
 ag-grid-angular {
   flex: 1;
-  min-height: 0; 
+  min-height: 0;
 }
