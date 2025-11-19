@@ -43,9 +43,9 @@
                      class="ag-theme-alpine"
                      [rowData]="rowData"
                      [columnDefs]="columnDefs"
-                     [rowSelection]="rowSelection"
                      [defaultColDef]="defaultColDef"
                      theme="legacy"
+                     (rowDoubleClicked)="onRowDoubleClicked($event)"
                      (gridReady)="onGridReady($event)">
     </ag-grid-angular>
   </div>

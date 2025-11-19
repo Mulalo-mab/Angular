@@ -218,26 +218,45 @@ export class Groceries {
 
     if (selectedNodes.length === 0) {
       this.rowData = [];
+      if (this.gridApi) {
+        this.gridApi.setRowData(this.rowData);
+      }
       return;
     }
 
-    // Get leaf nodes (items without children) from selection
-    const leafNodes = selectedNodes.filter(node =>
-      !node.expandable || !this.treeControl.getDescendants(node).length
-    );
-
-    // Convert to grid data format
-    this.rowData = leafNodes.map(node => ({
+    // Show all selected nodes
+    this.rowData = selectedNodes.map(node => ({
       ID: node.ID,
-      GroupName: node.GroupName
+      GroupName: node.GroupName,
+      level: node.level,
+      isLeaf: !node.expandable
     }));
-
+   
     if (this.gridApi) {
       this.gridApi.setRowData(this.rowData);
     }
   }
 
-  
+  // Remove item from grid (and deselect in tree)
+  removeFromGrid(item: any): void {
+    const treeNode = this.treeControl.dataNodes.find(node =>
+      node.ID === item.ID && node.GroupName === item.GroupName
+    );
+
+    if (treeNode) {
+      // deselect the node in tree
+      this.checklistSelection.deselect(treeNode);
+
+      if (treeNode.expandable) {
+        const descendants = this.treeControl.getDescendants(treeNode);
+        this.checklistSelection.deselect(...descendants);
+      }
+    }
+  }
+
+  onRowDoubleClicked(event: any): void {
+    this.removeFromGrid(event.data);
+  }
 
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;

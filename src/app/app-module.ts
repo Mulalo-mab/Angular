@@ -24,6 +24,7 @@ import { PostComponent } from './post/post-component/post-component';
 import { PostForm } from './post/post-component/post-form/post-form';
 
 
+
 @NgModule({
   declarations: [
     App, 

@@ -34,7 +34,9 @@ export class TreeNode implements OnInit {
 
   rowData: any[] = [];
   columnDefs: ColDef[] = [
-    { field: 'GroupName', headerName: 'Group Name', rowDrag: true },
+    {
+      field: 'GroupName', headerName: 'Group Name', rowDrag: true,
+    },
     {
       field: 'order',
       headerName: 'Order',
@@ -77,7 +79,6 @@ export class TreeNode implements OnInit {
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
   };
-
 
 
   treeFlattener = new MatTreeFlattener(
@@ -163,8 +164,6 @@ export class TreeNode implements OnInit {
     return result && !this.descendantsAllSelected(node);
   }
 
-
-
   itemSelectionToggle(node: ChecklistFlatNode): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
@@ -214,26 +213,28 @@ export class TreeNode implements OnInit {
     return this.checklistSelection.selected;
   }
 
-
-
-
   private updateGridData(): void {
     const selectedNodes = this.getSelectedNodes();
 
     if (selectedNodes.length === 0) {
       this.rowData = [];
+      if (this.gridApi) {
+        this.gridApi.setRowData(this.rowData);
+      }
       return;
     }
 
     // Get leaf nodes (items without children) from selection
-    const leafNodes = selectedNodes.filter(node =>
-      !node.expandable || !this.treeControl.getDescendants(node).length
-    );
+   // const leafNodes = selectedNodes.filter(node =>
+   // !node.expandable || !this.treeControl.getDescendants(node).length
+   // );
 
     // Convert to grid data format
-    this.rowData = leafNodes.map(node => ({
+    this.rowData = selectedNodes.map(node => ({
       ID: node.ID,
-      GroupName: node.GroupName
+      GroupName: node.GroupName,
+       level: node.level,
+      isLeaf: !node.expandable
     }));
 
     if (this.gridApi) {
@@ -241,14 +242,41 @@ export class TreeNode implements OnInit {
     }
   }
 
+  // remove item from the grid
+  removeFromGrid(item: any): void {
+    const treeNode = this.treeControl.dataNodes.find(node =>
+      node.ID === item.ID && node.GroupName === item.GroupName
+    );
+
+    if (treeNode) {
+      this.checklistSelection.deselect(treeNode);
+
+      if (treeNode.expandable) {
+        const descendants = this.treeControl.getDescendants(treeNode);
+        this.checklistSelection.deselect(...descendants);
+      }
+    }
+  }
+
+  onRowDoubleClicked(event: any): void {
+    this.removeFromGrid(event.data);
+  }
+
+  // remove multiple selected row
+  removeSelectedRow(): void {
+    const selectedRows = this.gridApi.getSelectedRows();
+    if (selectedRows.length > 0) {
+      selectedRows.forEach((row: any) => {
+        this.removeFromGrid(row);
+      })
+    }
+  }
 
 
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     this.updateGridData();
   }
-
-
 
   expandAll(): void {
     this.treeControl.expandAll();
@@ -257,7 +285,4 @@ export class TreeNode implements OnInit {
   collapseAll(): void {
     this.treeControl.collapseAll();
   }
-
-
-
 }

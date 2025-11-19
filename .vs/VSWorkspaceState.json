@@ -4,11 +4,11 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\core-feature",
-    "\\src\\app\\core-feature\\flat-tree",
     "\\src\\app\\core-feature\\groceries",
     "\\src\\app\\core-feature\\tree-node",
+    "\\src\\assets",
     "\\src\\assets\\data"
   ],
-  "SelectedNode": "\\src\\app\\core-feature\\groceries\\groceries.ts",
+  "SelectedNode": "\\src\\app\\core-feature\\tree-node\\tree-node.ts",
   "PreviewInSolutionExplorer": false
 }

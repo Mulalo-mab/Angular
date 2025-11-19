@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface TreeNodeData {
   ID: number;
@@ -20,30 +21,20 @@ export interface FlatNode {
 })
 export class GroceriesService {
 
-  private treeData: TreeNodeData[] = [
-    { ID: 1, GroupName: 'Fruits', ParentID: 0 },
-    { ID: 2, GroupName: 'Apple', ParentID: 1 },
-    { ID: 3, GroupName: 'Banana', ParentID: 1 },
-    { ID: 4, GroupName: 'Fuji', ParentID: 2 },
-    { ID: 5, GroupName: 'Macintosh', ParentID: 2 },
-    { ID: 6, GroupName: 'Yellow', ParentID: 3 },
-    { ID: 7, GroupName: 'Green', ParentID: 3 },
-    { ID: 8, GroupName: 'Vegetables', ParentID: 0 },
-    { ID: 9, GroupName: 'Orange', ParentID: 8 },
-    { ID: 10, GroupName: 'Green', ParentID: 8 },
-    { ID: 11, GroupName: 'Meat', ParentID: 0 },
-    { ID: 12, GroupName: 'Pork', ParentID: 11 },
-    { ID: 13, GroupName: 'Beef', ParentID: 11 },
-    { ID: 14, GroupName: 'Chicken', ParentID: 11 },
-    { ID: 15, GroupName: 'Baking', ParentID: 0 },
-    { ID: 16, GroupName: 'Flours', ParentID: 15 },
-    { ID: 17, GroupName: 'Almond Flour', ParentID: 16 },
-    { ID: 18, GroupName: 'Coconut Flour', ParentID: 16 }
-  ];
+  private apiUrl = 'assets/data/treedata.json';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getTreeData(): Observable<TreeNodeData[]> {
-    return of(this.treeData);
+    // retrive the token from session
+    const accessToken = sessionStorage.getItem('access_token');
+
+    //create the httpHeaders
+    const headers = new HttpHeaders().set('Authorization', 'bearer ' + accessToken);
+
+    // define the option object to pass the headers
+    const options = { headers: headers };
+
+    return this.http.get<TreeNodeData[]>(this.apiUrl);
   }
 }

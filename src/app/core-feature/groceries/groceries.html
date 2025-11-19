@@ -53,6 +53,7 @@
                        [rowSelection]="rowSelection"
                        [animateRows]="true"
                        theme="legacy"
+                       (rowDoubleClicked)="onRowDoubleClicked($event)"
                        (gridReady)="onGridReady($event)">
       </ag-grid-angular>
     </div>
