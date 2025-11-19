@@ -4,6 +4,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { CoreFeatureRoutingModule } from './core-feature-routing-module';
 import { CoreFeature } from './core-feature';
@@ -28,6 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NestedTree } from './nested-tree/nested-tree';
 import { Groceries } from './groceries/groceries';
+import { Autocomplete } from './autocomplete/autocomplete';
 
 @NgModule({
   declarations: [
@@ -47,7 +55,8 @@ import { Groceries } from './groceries/groceries';
     TreeNode,
     FlatTree,
     NestedTree,
-    Groceries
+    Groceries,
+    Autocomplete
   ],
   imports: [
     CommonModule,
@@ -60,6 +69,12 @@ import { Groceries } from './groceries/groceries';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatChipsModule,
+    MatSlideToggleModule,
     CoreFeatureRoutingModule
   ]
 })

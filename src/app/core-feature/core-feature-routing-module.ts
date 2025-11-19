@@ -16,6 +16,8 @@ import { TreeNode } from './tree-node/tree-node';
 import { FlatTree } from './flat-tree/flat-tree';
 import { NestedTree } from './nested-tree/nested-tree';
 import { Groceries } from './groceries/groceries';
+import { Autocomplete } from './autocomplete/autocomplete';
+
 
 
 
@@ -40,6 +42,7 @@ const routes: Routes = [
       { path: 'flat', component: FlatTree },
       { path: 'nested', component: NestedTree },
       { path: 'groceries', component: Groceries },
+      { path: 'autocomplete', component: Autocomplete },
     ]
   }
 ];

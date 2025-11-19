@@ -1,0 +1,24 @@
+<div class="autocomplete-container">
+  <h2>Angular Material Autocomplete</h2>
+  <p>Start typing to see the autocomplete in action</p>
+
+  <form>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search Technologies</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async"
+                    [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <div class="selected-value" *ngIf="myControl.value">
+    <strong>Selected:</strong> {{ myControl.value }}
+  </div>
+</div>

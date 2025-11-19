@@ -1,0 +1,172 @@
+.autocomplete-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-toggle {
+  margin-left: auto;
+}
+
+.slide-toggle {
+  white-space: nowrap;
+}
+
+.search-section {
+  margin-bottom: 30px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.tech-list-section {
+  margin: 30px 0;
+}
+
+.options-container {
+  margin-top: 15px;
+}
+
+.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+  .option-item:hover {
+    border-color: #3f51b5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .option-item.selected {
+    border-color: #3f51b5;
+    background-color: #f5f7ff;
+  }
+
+.option-checkbox {
+  flex: 1;
+}
+
+.tech-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.angular {
+  background: #dd0031;
+}
+
+.react {
+  background: #61dafb;
+  color: #282c34;
+}
+
+.vue {
+  background: #41b883;
+}
+
+.javascript {
+  background: #f7df1e;
+  color: #000;
+}
+
+.typescript {
+  background: #3178c6;
+}
+
+.html {
+  background: #e34f26;
+}
+
+.css {
+  background: #1572b6;
+}
+
+.selected-summary {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.selected-value {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e8f5e8;
+  border: 1px solid #4caf50;
+  border-radius: 6px;
+  color: #2e7d32;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .control-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-toggle {
+    margin-left: 0;
+  }
+
+  .grid-view {
+    grid-template-columns: 1fr;
+  }
+}
+
+h2, h3, h4 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 20px;
+}

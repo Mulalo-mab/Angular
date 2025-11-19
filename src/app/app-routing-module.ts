@@ -35,10 +35,10 @@ const routes: Routes = [
     path: 'core-feature',
     loadChildren: () => import('./core-feature/core-feature-module').then(m => m.CoreFeatureModule)
   },
-  {
-    path: 'angular-material',
-    loadChildren: () => import('./angular-material/angular-material-module').then(m => m.AngularMaterialModule)
-  },
+  //{
+  //  path: 'angular-material',
+ //   loadChildren: () => import('./angular-material/angular-material-module').then(m => m.AngularMaterialModule)
+ // },
  
   { path: '**', redirectTo: '/home' }
 ];

@@ -1,0 +1,100 @@
+<div class="autocomplete-container">
+  <h2>Angular Material Autocomplete with Selection Features</h2>
+  <p>Start typing to see the autocomplete in action</p>
+
+  <!-- Control Buttons -->
+  <div class="control-buttons">
+    <button mat-raised-button
+            color="primary"
+            (click)="toggleSelectAll()"
+            class="control-btn">
+      <mat-icon>{{ selectAll ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+      {{ selectAll ? 'Select All' : 'Deselect All' }}
+    </button>
+
+    <button mat-raised-button
+            color="warn"
+            (click)="clearSelections()"
+            class="control-btn"
+            [disabled]="selectedOptions.length === 0">
+      <mat-icon>clear_all</mat-icon>
+      Clear Selections
+    </button>
+
+    <mat-button-toggle-group [(value)]="viewMode" class="view-toggle">
+      <mat-button-toggle value="list">
+        <mat-icon>view_list</mat-icon>
+        List
+      </mat-button-toggle>
+      <mat-button-toggle value="grid">
+        <mat-icon>grid_view</mat-icon>
+        Grid
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-slide-toggle [(ngModel)]="showSelectedOnly"
+                      color="primary"
+                      class="slide-toggle">
+      Show Selected Only
+    </mat-slide-toggle>
+  </div>
+
+  <!-- Search/Autocomplete Section -->
+  <form class="search-section">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search Technologies</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async"
+                    [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <!-- Technology List with Checkboxes -->
+  <div class="tech-list-section">
+    <h3>Technology Stack ({{selectedOptions.length}} selected)</h3>
+
+    <div [class.grid-view]="viewMode === 'grid'"
+         [class.list-view]="viewMode === 'list'"
+         class="options-container">
+      <div *ngFor="let option of getDisplayedOptions()"
+           class="option-item"
+           [class.selected]="isSelected(option)">
+        <mat-checkbox [checked]="isSelected(option)"
+                      (change)="toggleSelection(option)"
+                      color="primary"
+                      class="option-checkbox">
+          {{option}}
+        </mat-checkbox>
+        <span class="tech-badge" [class]="option.toLowerCase()">
+          {{option.substring(0, 1)}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Items Summary -->
+  <div class="selected-summary" *ngIf="selectedOptions.length > 0">
+    <h4>Selected Technologies:</h4>
+    <div class="selected-chips">
+      <mat-chip *ngFor="let selected of selectedOptions"
+                color="primary"
+                selected>
+        {{selected}}
+        <button matChipRemove (click)="toggleSelection(selected)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </div>
+  </div>
+
+  <div class="selected-value" *ngIf="myControl.value">
+    <strong>Current Search:</strong> {{ myControl.value }}
+  </div>
+</div>
