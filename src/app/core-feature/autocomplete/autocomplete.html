@@ -2,6 +2,16 @@
   <h2>Angular Material Autocomplete with Selection Features</h2>
   <p>Start typing to see the autocomplete in action</p>
 
+
+  <mat-form-field>
+    <mat-label>Pick a time</mat-label>
+    <input matInput [matTimepicker]="picker">
+    <mat-timepicker-toggle matIconSuffix [for]="picker">
+      <mat-icon matTimepickerToggleIcon>keyboard_arrow_down</mat-icon>
+    </mat-timepicker-toggle>
+    <mat-timepicker #picker />
+  </mat-form-field>
+
   <!-- Control Buttons -->
   <div class="control-buttons">
     <button mat-raised-button
@@ -79,7 +89,7 @@
     </div>
   </div>
 
-  <!-- Selected Items Summary -->
+  <!-- Selected Items -->
   <div class="selected-summary" *ngIf="selectedOptions.length > 0">
     <h4>Selected Technologies:</h4>
     <div class="selected-chips">
@@ -97,4 +107,6 @@
   <div class="selected-value" *ngIf="myControl.value">
     <strong>Current Search:</strong> {{ myControl.value }}
   </div>
+
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>

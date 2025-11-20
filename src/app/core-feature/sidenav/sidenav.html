@@ -1,0 +1,116 @@
+
+
+<mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop.value">
+  <mat-drawer #drawer [mode]="mode.value">I'm a drawer</mat-drawer>
+  <mat-drawer-content>
+    <mat-form-field>
+      <mat-label>Sidenav mode</mat-label>
+      <mat-select #mode value="side">
+        <mat-option value="side">Side</mat-option>
+        <mat-option value="over">Over</mat-option>
+        <mat-option value="push">Push</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Has backdrop</mat-label>
+      <mat-select #hasBackdrop>
+        <mat-option>Unset</mat-option>
+        <mat-option [value]="true">True</mat-option>
+        <mat-option [value]="false">False</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button matButton="elevated" (click)="drawer.toggle()">Toggle drawer</button>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<div class="slider-container">
+  <mat-card class="config-card">
+    <mat-card-content>
+      <h2 class="card-title">Slider Configuration</h2>
+
+      <div class="config-section">
+        <section class="input-group">
+          <mat-form-field appearance="outline" class="config-input">
+            <mat-label>Value</mat-label>
+            <input matInput type="number" [(ngModel)]="value" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="config-input">
+            <mat-label>Min Value</mat-label>
+            <input matInput type="number" [(ngModel)]="min" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="config-input">
+            <mat-label>Max Value</mat-label>
+            <input matInput type="number" [(ngModel)]="max" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="config-input">
+            <mat-label>Step size</mat-label>
+            <input matInput type="number" [(ngModel)]="step" />
+          </mat-form-field>
+        </section>
+
+        <section class="checkbox-group">
+          <mat-checkbox [(ngModel)]="showTicks" class="config-checkbox">
+            Show ticks
+          </mat-checkbox>
+
+          <mat-checkbox [(ngModel)]="thumbLabel" class="config-checkbox">
+            Show thumb label
+          </mat-checkbox>
+
+          <mat-checkbox [(ngModel)]="disabled" class="config-checkbox">
+            Disabled
+          </mat-checkbox>
+        </section>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="result-card">
+    <mat-card-content>
+      <h2 class="card-title">Result</h2>
+
+      <div class="result-section">
+        <div class="value-display">
+          <span class="value-label">Current Value:</span>
+          <span class="value-number">{{slider.value}}</span>
+        </div>
+
+        <div class="slider-wrapper">
+          <mat-slider class="custom-slider"
+                      [disabled]="disabled"
+                      [max]="max"
+                      [min]="min"
+                      [step]="step"
+                      [discrete]="thumbLabel"
+                      [showTickMarks]="showTicks">
+            <input matSliderThumb [(ngModel)]="value" #slider />
+          </mat-slider>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<mat-form-field>
+  <mat-label>Horizontal position</mat-label>
+  <mat-select [(value)]="horizontalPosition">
+    <mat-option value="start">Start</mat-option>
+    <mat-option value="center">Center</mat-option>
+    <mat-option value="end">End</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Vertical position</mat-label>
+  <mat-select [(value)]="verticalPosition">
+    <mat-option value="top">Top</mat-option>
+    <mat-option value="bottom">Bottom</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button matButton="outlined" (click)="openSnackBar()" aria-label="Show an example snack-bar">
+  Show snack bar
+</button>

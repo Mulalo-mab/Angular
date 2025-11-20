@@ -1,0 +1,81 @@
+<mat-tab-group>
+  <mat-tab label="First">
+    <mat-stepper headerPosition="bottom" #stepper1 linear>
+      <mat-step [stepControl]="firstFormGroup1">
+        <form [formGroup]="firstFormGroup1">
+          <ng-template matStepLabel>Fill in your name</ng-template>
+          <mat-form-field>
+            <mat-label>Full name</mat-label>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup1" optional>
+        <form [formGroup]="secondFormGroup1">
+          <ng-template matStepLabel>Fill in your email address</ng-template>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="secondCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        Congratulations you won!!!
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper1.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-tab>
+
+  <mat-tab label="Second">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper2>
+      <mat-step [stepControl]="firstFormGroup2">
+        <form [formGroup]="firstFormGroup2">
+          <ng-template matStepLabel>Where are you located?</ng-template>
+          <mat-form-field>
+            <mat-label>Location</mat-label>
+            <input matInput placeholder="Location" formControlName="firstCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup2">
+        <form [formGroup]="secondFormGroup2">
+          <ng-template matStepLabel>How old are you?</ng-template>
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="Age" formControlName="secondCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper2.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-tab>
+</mat-tab-group>

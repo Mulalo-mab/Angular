@@ -8,9 +8,20 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 import { CoreFeatureRoutingModule } from './core-feature-routing-module';
 import { CoreFeature } from './core-feature';
@@ -36,6 +47,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NestedTree } from './nested-tree/nested-tree';
 import { Groceries } from './groceries/groceries';
 import { Autocomplete } from './autocomplete/autocomplete';
+import { Sidenav } from './sidenav/sidenav';
+import { Stepper } from './stepper/stepper';
 
 @NgModule({
   declarations: [
@@ -56,7 +69,9 @@ import { Autocomplete } from './autocomplete/autocomplete';
     FlatTree,
     NestedTree,
     Groceries,
-    Autocomplete
+    Autocomplete,
+    Sidenav,
+    Stepper
   ],
   imports: [
     CommonModule,
@@ -75,7 +90,21 @@ import { Autocomplete } from './autocomplete/autocomplete';
     MatButtonToggleModule,
     MatChipsModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatToolbarModule,
+    MatSliderModule,
+    MatCardModule,
+    MatTabsModule,
+    MatListModule,
+    MatTimepickerModule,
+    MatStepperModule,
+    MatSnackBarModule,
     CoreFeatureRoutingModule
-  ]
+  ],
+  providers: [
+    provideNativeDateAdapter()
+  ],
 })
 export class CoreFeatureModule { }
